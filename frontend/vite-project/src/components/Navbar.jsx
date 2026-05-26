@@ -2,11 +2,11 @@ import React from 'react'
 import './Navbar.css'
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  
 
+  const { user, isLoggedIn, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -46,14 +46,32 @@ const Navbar = () => {
         {/* Desktop Right Buttons */}
         <div className="nav-right">
 
-          <Link to={"/login"}>
-            <button className="btn-login">Log In</button>
-          </Link>
-          <Link to={"/book/:id"} className='link'>
-          <button className="btn-book">
-            <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-            Book Now
-          </button>
+          {isLoggedIn ? (
+            <div className="profile-menu">
+              <Link to="/profile" className="profile-link">
+                <div className="profile-avatar">
+                  {user?.name?.charAt(0).toUpperCase()}
+                </div>
+
+                <span className="profile-name">
+                  {user?.name}
+                </span>
+              </Link>
+
+              <button className="btn-login" onClick={logout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to={"/login"}>
+              <button className="btn-login">Log In</button>
+            </Link>
+          )}
+          <Link to={"/services"} className='link'>
+            <button className="btn-book">
+              <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              Book Now
+            </button>
           </Link>
         </div>
 
@@ -86,7 +104,7 @@ const Navbar = () => {
         <p className="demo-sub">Book verified local experts for all your home service needs — quick, affordable, and hassle-free.</p>
         {/*  <span className="demo-note">↑ SECTION 1 — NAVBAR COMPONENT</span> */}
       {/* </div> */}
- 
+
       {/* Scroll space for demo */}
       {/* <div style={{ height: "100vh", background: "#f5f0eb", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#8A94A6", fontSize: "14px" }}>

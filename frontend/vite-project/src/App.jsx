@@ -4,6 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute"; // match your exact fi
 
 import Home from "./pages/Home";
 import LoginRegister from "./pages/Loginregister";   // match your exact filename
+import Userprofile from "./pages/Userprofile";
 import JoinProvider from "./pages/JoinProvider"; // match your exact filename
 import ExploreProviders from "./pages/ExploreProviders"; // match your exact filename
 import BookNow from "./pages/BookNow";
@@ -30,10 +31,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/register" element={<LoginRegister />} />
+          <Route path="/profile" element={<Userprofile />} />
           <Route path="/join-provider" element={<JoinProvider />} />
           <Route path="/providers" element={<ExploreProviders />} />
           <Route path="/search" element={<LocationSearch />} />
-          <Route path="/book/:id" element={
+          <Route path="/services" element={
             <ProtectedRoute><BookNow /></ProtectedRoute>
           } />
           <Route path="*" element={<Navigate to="/" replace />} />
