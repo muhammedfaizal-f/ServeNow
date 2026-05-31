@@ -227,23 +227,12 @@ const home = () => {
         </div>
 
       </section>
-      <section id="services">
+      <section id="home"></section>
+      <section id="services"></section>
 
-        {/* Services Content */}
+      <section id="Howitworks"></section>
 
-      </section>
-
-      <section id="Howitworks">
-
-        {/* How It Works Content */}
-
-      </section>
-
-      <section id="WhyChooseUs">
-
-        {/* Why Choose Us Content */}
-
-      </section>
+      <section id="WhyChooseUs"></section>
     </>
   )
 }

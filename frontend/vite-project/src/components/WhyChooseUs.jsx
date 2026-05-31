@@ -96,7 +96,7 @@ const WhyChooseUs = () => {
   return (
     
     <>
-    <section className="wcu-root">
+    <section id="whychooseus" className="wcu-root">
         <div className="wcu-blob wcu-blob-1" />
         <div className="wcu-blob wcu-blob-2" />
         <div className="wcu-bg-text">TRUST</div>

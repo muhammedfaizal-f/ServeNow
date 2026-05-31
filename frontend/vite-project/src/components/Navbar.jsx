@@ -49,17 +49,13 @@ const Navbar = () => {
           </li>
 
           <li>
-           <Link to="/Howitworks">
-            How It Works
-           </Link>
-              
-           
+            <a href="#howitworks">How It Works</a>
+
+
           </li>
 
           <li>
-            <a href="#WhyChooseUs" className="nav-link-item">
-              About
-            </a>
+           <a href="#whychooseus">About</a>
           </li>
 
         </ul>

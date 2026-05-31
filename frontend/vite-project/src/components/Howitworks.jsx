@@ -81,7 +81,7 @@ const HowItWorks = () => {
   const [activeStep, setActiveStep] = useState(0);
   return (
     <>
-     <section className="hiw-root">
+     <section id="howitworks" className="hiw-root">
         <div className="hiw-blob hiw-blob-1" />
         <div className="hiw-blob hiw-blob-2" />
  

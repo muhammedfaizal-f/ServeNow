@@ -80,11 +80,16 @@ export default function ExploreProviders() {
       if (avail) data = data.filter(p => p.available);
       if (minRate) data = data.filter(p => p.price >= Number(minRate));
       if (maxRate) data = data.filter(p => p.price <= Number(maxRate));
-      if (search) data = data.filter(p =>
-        p.name.toLowerCase().includes(search.toLowerCase()) ||
-        p.role.toLowerCase().includes(search.toLowerCase()) ||
-        p.skills.some(s => s.toLowerCase().includes(search.toLowerCase()))
-      );
+      if (search) {
+        data = data.filter(p =>
+          p.name.toLowerCase().includes(search.toLowerCase()) ||
+          p.role.toLowerCase().includes(search.toLowerCase()) ||
+          p.category.toLowerCase().includes(search.toLowerCase()) ||
+          p.skills.some(s =>
+            s.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+      }
       if (sort === "rating") data.sort((a, b) => b.rating - a.rating);
       if (sort === "priceLow") data.sort((a, b) => a.price - b.price);
       if (sort === "priceHigh") data.sort((a, b) => b.price - a.price);
@@ -99,13 +104,13 @@ export default function ExploreProviders() {
 
   useEffect(() => { fetchProviders(); }, [fetchProviders]);
 
- const handleBook = (provider) => {
-  navigate(`/book/${provider._id}`, {
-  state: {
-    provider: provider
-  }
-});
-};
+  const handleBook = (provider) => {
+    navigate(`/book/${provider._id}`, {
+      state: {
+        provider: provider
+      }
+    });
+  };
 
   return (
     <>
@@ -116,8 +121,16 @@ export default function ExploreProviders() {
           <div className="ep-logo" onClick={() => navigate("/")}>Serve<span>Now</span></div>
           <div className="ep-sw">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
-            <input className="ep-si" placeholder="Search providers, skills…"
-              value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />
+            <input
+              className="ep-si"
+              placeholder="Search providers, skills…"
+              value={search}
+              onChange={e => {
+                setSearch(e.target.value);
+                setCategory("All"); // remove Plumbing/Electrician/etc filter
+                setPage(1);
+              }}
+            />
           </div>
           <button className={`ep-fb ${showFilt ? "on" : ""}`} onClick={() => setShowFilt(f => !f)}>
             <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="11" y1="18" x2="13" y2="18" /></svg>
@@ -153,8 +166,17 @@ export default function ExploreProviders() {
           {/* categories */}
           <div className="ep-cats">
             {CATEGORIES.map(c => (
-              <button key={c} className={`ep-cat ${category === c ? "on" : ""}`}
-                onClick={() => { setCategory(c); setPage(1); }}>{c}</button>
+              <button
+                key={c}
+                className={`ep-cat ${category === c ? "on" : ""}`}
+                onClick={() => {
+                  setCategory(c);
+                  setSearch(""); // clear search box
+                  setPage(1);
+                }}
+              >
+                {c}
+              </button>
             ))}
           </div>
 
