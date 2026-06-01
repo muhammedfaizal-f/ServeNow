@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const providers = [
     {
+        _id: "1",
         name: "Ravi Kumar",
         role: "Master Plumber",
         location: "Gandhipuram, Coimbatore",
@@ -24,6 +25,7 @@ const providers = [
         responseTime: "~10 mins",
     },
     {
+        _id: "2",
         name: "Suresh M.",
         role: "Senior Electrician",
         location: "RS Puram, Coimbatore",
@@ -42,6 +44,7 @@ const providers = [
         responseTime: "~15 mins",
     },
     {
+        _id: "3",
         name: "Meena S.",
         role: "Deep Cleaning Expert",
         location: "Saibaba Colony, CBE",
@@ -60,6 +63,7 @@ const providers = [
         responseTime: "~5 mins",
     },
     {
+        _id: "4",
         name: "Arjun D.",
         role: "AC & Appliance Tech",
         location: "Peelamedu, Coimbatore",
@@ -78,6 +82,7 @@ const providers = [
         responseTime: "~20 mins",
     },
     {
+        _id: "5",
         name: "Priya R.",
         role: "Home Tutor",
         location: "Peelamedu, Coimbatore",
@@ -96,6 +101,7 @@ const providers = [
         responseTime: "~8 mins",
     },
     {
+        _id: "6",
         name: "Karthik V.",
         role: "Carpenter & Fabricator",
         location: "Saravanampatti, CBE",
@@ -321,7 +327,7 @@ const TopProviders = () => {
                                         <button className="btn-chat" title="Message provider">
                                             <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>
                                         </button>
-                                        
+
                                         <button
 
                                             type="button"
@@ -329,7 +335,7 @@ const TopProviders = () => {
                                             onClick={() => {
                                                 handleBook(i);
 
-                                                navigate("/book/:id", {
+                                                navigate(`/book/${p._id}`, {
                                                     state: {
                                                         provider: p
                                                     }

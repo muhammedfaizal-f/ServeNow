@@ -7,6 +7,7 @@ const { Booking, Provider, Service } = require("../models");
 // ────────────────────────────────────────────────────────────────────────────
 const createBooking = async (req, res) => {
   try {
+    console.log("BODY =", req.body);
     const {
       providerId,
       serviceId,
@@ -85,6 +86,8 @@ const createBooking = async (req, res) => {
       booking: populated,
     });
   } catch (error) {
+    console.error(error);
+    
     console.error("createBooking:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
