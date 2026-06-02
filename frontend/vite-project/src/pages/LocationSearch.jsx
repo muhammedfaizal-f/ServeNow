@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./LocationSearch.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+
+
 const CATEGORIES = [
   { v: "Plumbing", ic: "🔧", c: "#4A90E2", bg: "#1e3a5f" },
   { v: "Electrician", ic: "⚡", c: "#F59E0B", bg: "#3d2a00" },

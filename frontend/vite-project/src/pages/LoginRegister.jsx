@@ -41,6 +41,8 @@ export default function LoginRegister() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [confirmObj, setConfirmObj] = useState(null);
+  const [showPhoneAuth, setShowPhoneAuth] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
 
   const sendOtp = async () => {
 
@@ -57,6 +59,7 @@ export default function LoginRegister() {
 
       window.confirmationResult = confirmationResult;
 
+      setOtpSent(true);
       alert("OTP Sent");
 
     } catch (err) {
@@ -68,34 +71,34 @@ export default function LoginRegister() {
   };
 
   const verifyOtp = async () => {
-  try {
-    const result = await window.confirmationResult.confirm(otp);
+    try {
+      const result = await window.confirmationResult.confirm(otp);
 
-    const otpUser = {
-      name: result.user.phoneNumber,
-      phone: result.user.phoneNumber,
-      email: "",
-      avatar: "",
-      role: "user",
-    };
+      const otpUser = {
+        name: result.user.phoneNumber,
+        phone: result.user.phoneNumber,
+        email: "",
+        avatar: "",
+        role: "user",
+      };
 
-    localStorage.setItem("user", JSON.stringify(otpUser));
-    localStorage.setItem("token", result.user.uid);
+      localStorage.setItem("user", JSON.stringify(otpUser));
+      localStorage.setItem("token", result.user.uid);
 
-    alert("Login Success");
+      alert("Login Success");
 
-    setPhone("");
-    setOtp("");
+      setPhone("");
+      setOtp("");
 
-    window.confirmationResult = null;
+      window.confirmationResult = null;
 
-    navigate("/profile");
+      navigate("/profile");
 
-  } catch (err) {
-    console.log(err);
-    alert("Invalid OTP");
-  }
-};
+    } catch (err) {
+      console.log(err);
+      alert("Invalid OTP");
+    }
+  };
 
 
 
@@ -260,27 +263,50 @@ export default function LoginRegister() {
               {/* PHONE OTP */}
               <div className="otp-box">
 
-                <input
-                  type="text"
-                  placeholder="+91 Enter phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+                {/* OPEN PHONE LOGIN */}
 
-                <button onClick={sendOtp}>
-                  Send OTP
-                </button>
+                {!showPhoneAuth ? (
 
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                />
+                  <button
+                    className="phone-btn"
+                    onClick={() => setShowPhoneAuth(true)}
+                  >
+                    📱 Continue with Phone OTP
+                  </button>
 
-                <button onClick={verifyOtp}>
-                  Verify OTP
-                </button>
+                ) : (
+
+                  <div className="otp-box show">
+
+                    <input
+                      type="text"
+                      placeholder="+91 Enter phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+
+                    <button onClick={sendOtp}>
+                      Send OTP
+                    </button>
+
+                    {otpSent && (
+                      <>
+                        <input
+                          type="text"
+                          placeholder="Enter OTP"
+                          value={otp}
+                          onChange={(e) => setOtp(e.target.value)}
+                        />
+
+                        <button onClick={verifyOtp}>
+                          Verify OTP
+                        </button>
+                      </>
+                    )}
+
+                  </div>
+
+                )}
 
               </div>
             </div>
