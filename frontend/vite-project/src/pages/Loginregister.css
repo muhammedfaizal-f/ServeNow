@@ -637,6 +637,19 @@ body {
   overflow:hidden;
   animation:slideDown .4s ease;
 }
+.password-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+}
 
 @keyframes slideDown{
   from{

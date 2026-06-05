@@ -30,7 +30,9 @@ export default function LoginRegister() {
   // If already logged in → redirect based on role
   useEffect(() => {
     if (isLoggedIn && user) {
-      if (user.role === "provider") {
+      if (user.role === "admin") {
+        navigate("/admin-profile");
+      } else if (user.role === "provider") {
         navigate("/provider-profile");
       } else {
         navigate("/profile");
@@ -45,6 +47,7 @@ export default function LoginRegister() {
   const [success, setSuccess] = useState("");
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", role: "user" });
+  const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [confirmObj, setConfirmObj] = useState(null);
@@ -104,10 +107,18 @@ export default function LoginRegister() {
     try {
       if (mode === "login") {
         const data = await login(form.email, form.password);
+
         console.log("LOGIN USER =", data.user);
         console.log("ROLE =", data.user.role);
-        setSuccess(`Welcome back, ${data.user.name}!`);
-        // Role-based redirect handled by useEffect
+
+        if (data.user.role === "admin") {
+          console.log("GOING TO ADMIN");
+          navigate("/admin-profile");
+        } else if (data.user.role === "provider") {
+          navigate("/provider-profile");
+        } else {
+          navigate("/profile");
+        }
       } else {
         const data = await register({
           name: form.name,
@@ -220,7 +231,27 @@ export default function LoginRegister() {
                 </div>
               )}
               <div className="fg"><label className="fl">Email Address</label><input className="fi" type="email" placeholder="you@example.com" value={form.email} onChange={e => u("email", e.target.value)} onKeyDown={e => e.key === "Enter" && handleSubmit()} /></div>
-              <div className="fg"><label className="fl">Password</label><input className="fi" type="password" placeholder="••••••••" value={form.password} onChange={e => u("password", e.target.value)} onKeyDown={e => e.key === "Enter" && handleSubmit()} /></div>
+              <div className="fg">
+                <label className="fl">Password</label>
+
+                <div className="password-wrapper">
+                  <input
+                    className="fi"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={form.password}
+                    onChange={e => u("password", e.target.value)}
+                    onKeyDown={e => e.key === "Enter" && handleSubmit()}
+                  />
+
+                  <span
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? "🙈" : "👁️"}
+                  </span>
+                </div>
+              </div>
             </div>
 
             {error && <div className="alert ae">⚠ {error}</div>}

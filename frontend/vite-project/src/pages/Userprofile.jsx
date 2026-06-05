@@ -35,11 +35,13 @@ export default function UserProfile() {
     // const { user, logout, updateUser } = useAuth();   // real auth
 
     const { user, logout } = useAuth();
-    useEffect(() => {
-        if (user?.role === "provider") {
-            navigate("/provider-profile");
-        }
-    }, [user, navigate]);
+   useEffect(() => {
+  if (user?.role === "provider") {
+    navigate("/provider-profile");
+  } else if (user?.role === "admin") {
+    navigate("/admin-profile");
+  }
+}, [user, navigate]);
     const [bookings, setBookings] = useState(MOCK_BOOKINGS);
     const [activeTab, setActiveTab] = useState("Overview");
     const [loading, setLoading] = useState(false);

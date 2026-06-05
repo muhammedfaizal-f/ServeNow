@@ -20,8 +20,10 @@ export default function JoinProvider() {
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+
 
   const [form, setForm] = useState({
     name: "", email: "", phone: "", password: "",
@@ -70,87 +72,87 @@ export default function JoinProvider() {
   };
 
   const submit = async () => {
-  const err = validate();
+    const err = validate();
 
-  if (err) {
-    setError(err);
-    return;
-  }
+    if (err) {
+      setError(err);
+      return;
+    }
 
-  setLoading(true);
-  setError("");
+    setLoading(true);
+    setError("");
 
-  try {
-    // Create provider account
-    const res = await authAPI.register({
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      phone: form.phone,
-      role: "provider",
-      category: form.category,
-      hourlyRate: Number(form.hourlyRate),
-    });
+    try {
+      // Create provider account
+      const res = await authAPI.register({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        phone: form.phone,
+        role: "provider",
+        category: form.category,
+        hourlyRate: Number(form.hourlyRate),
+      });
 
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-    // Save remaining provider details
-    await providerAPI.updateMyProfile({
-      bio: form.bio,
-      skills: form.skills
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
+      // Save remaining provider details
+      await providerAPI.updateMyProfile({
+        bio: form.bio,
+        skills: form.skills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
 
-      experience: Number(form.experience),
+        experience: Number(form.experience),
 
-      location: {
-        address: form.address,
-        city: form.city,
-        pincode: form.pincode,
-      },
+        location: {
+          address: form.address,
+          city: form.city,
+          pincode: form.pincode,
+        },
 
-      availableDays: form.days,
+        availableDays: form.days,
 
-      workingHours: {
-        start: form.startTime,
-        end: form.endTime,
-      },
-    });
+        workingHours: {
+          start: form.startTime,
+          end: form.endTime,
+        },
+      });
 
-    setDone(true);
-  } catch (err) {
-    setError(
-      err?.response?.data?.message ||
-      "Registration failed."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
+      setDone(true);
+    } catch (err) {
+      setError(
+        err?.response?.data?.message ||
+        "Registration failed."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
-     <div className="jp">
-        <div className="jp-b jp-b1"/><div className="jp-b jp-b2"/>
- 
+      <div className="jp">
+        <div className="jp-b jp-b1" /><div className="jp-b jp-b2" />
+
         <div className="jp-hd">
           <button className="jp-back" onClick={() => navigate("/")}>← Back to Home</button>
-          <div/><div className="jp-tag">🔧 Join 500+ professionals on ServeNow</div>
+          <div /><div className="jp-tag">🔧 Join 500+ professionals on ServeNow</div>
           <h1 className="jp-title">Become a <span>Provider</span></h1>
           <p className="jp-sub">Set your own hours, earn on your terms. Complete your profile in 4 steps.</p>
         </div>
- 
+
         {/* stepper */}
         <div className="stepper">
           {STEPS.map(s => (
-            <div key={s.n} className={`st-item ${step===s.n?"active-i":""} ${step>s.n?"done-i":""}`}>
+            <div key={s.n} className={`st-item ${step === s.n ? "active-i" : ""} ${step > s.n ? "done-i" : ""}`}>
               <div className="st-circle">{step > s.n ? "✓" : s.ic}</div>
               <div className="st-lbl">{s.l}</div>
             </div>
           ))}
         </div>
- 
+
         <div className="jp-card">
           {done ? (
             <div className="done-sc">
@@ -158,108 +160,126 @@ export default function JoinProvider() {
               <div className="done-t">You're all set, {form.name.split(" ")[0]}!</div>
               <div className="done-p">Your provider profile has been submitted. Our team will verify your ID within 24 hours.</div>
               <div className="done-steps">
-                {["Profile submitted for review","You'll receive an email once verified","Go live and start receiving bookings!"].map((t,i)=>(
+                {["Profile submitted for review", "You'll receive an email once verified", "Go live and start receiving bookings!"].map((t, i) => (
                   <div className="done-step" key={i}><span>✓</span>{t}</div>
                 ))}
               </div>
               <button onClick={() => navigate("/login")}
-                style={{marginTop:8,padding:"12px 28px",borderRadius:10,border:"none",background:"#FF6B35",color:"white",fontFamily:"'DM Sans',sans-serif",fontSize:14,fontWeight:500,cursor:"pointer"}}>
+                style={{ marginTop: 8, padding: "12px 28px", borderRadius: 10, border: "none", background: "#FF6B35", color: "white", fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 500, cursor: "pointer" }}>
                 Sign In to Dashboard →
               </button>
             </div>
           ) : (
             <>
               {/* ── Step 1 ── */}
-              {step===1 && <>
+              {step === 1 && <>
                 <div className="step-h">Basic Information</div>
                 <div className="step-sh">Tell us about yourself.</div>
                 {error && <div className="err-box">⚠ {error}</div>}
                 <div className="frow">
-                  <div className="f"><label className="fl">Full Name</label><input className="fi" placeholder="Ravi Kumar" value={form.name} onChange={e=>u("name",e.target.value)}/></div>
-                  <div className="f"><label className="fl">Phone</label><input className="fi" placeholder="9876543210" value={form.phone} onChange={e=>u("phone",e.target.value)}/></div>
+                  <div className="f"><label className="fl">Full Name</label><input className="fi" placeholder="Ravi Kumar" value={form.name} onChange={e => u("name", e.target.value)} /></div>
+                  <div className="f"><label className="fl">Phone</label><input className="fi" placeholder="9876543210" value={form.phone} onChange={e => u("phone", e.target.value)} /></div>
                 </div>
-                <div className="f"><label className="fl">Email Address</label><input className="fi" type="email" placeholder="you@example.com" value={form.email} onChange={e=>u("email",e.target.value)}/></div>
-                <div className="f"><label className="fl">Password (min 6 chars)</label><input className="fi" type="password" placeholder="••••••••" value={form.password} onChange={e=>u("password",e.target.value)}/></div>
-                <div className="f" style={{marginBottom:0}}><label className="fl">Short Bio</label><textarea className="fta" placeholder="Experienced plumber with 8 years in residential projects…" value={form.bio} onChange={e=>u("bio",e.target.value)}/></div>
+                <div className="f">
+                  <label className="fl">Password (min 6 chars)</label>
+
+                  <div className="password-wrapper">
+                    <input
+                      className="fi"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={form.password}
+                      onChange={e => u("password", e.target.value)}
+                    />
+
+                    <span
+                      className="password-toggle"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "🙈" : "👁️"}
+                    </span>
+                  </div>
+                </div>
+                <div className="f" style={{ marginBottom: 0 }}><label className="fl">Short Bio</label><textarea className="fta" placeholder="Experienced plumber with 8 years in residential projects…" value={form.bio} onChange={e => u("bio", e.target.value)} /></div>
               </>}
- 
+
               {/* ── Step 2 ── */}
-              {step===2 && <>
+              {step === 2 && <>
                 <div className="step-h">Your Service</div>
                 <div className="step-sh">Choose your category and pricing.</div>
                 {error && <div className="err-box">⚠ {error}</div>}
-                <div className="f" style={{marginBottom:16}}>
+                <div className="f" style={{ marginBottom: 16 }}>
                   <label className="fl">Service Category</label>
                   <div className="cat-g">
-                    {CATS.map(c=>(
-                      <button key={c.v} className={`cat-b ${form.category===c.v?"on":""}`}
-                        style={form.category===c.v?{background:`${c.c}15`,borderColor:`${c.c}40`}:{}}
-                        onClick={()=>u("category",c.v)}>
+                    {CATS.map(c => (
+                      <button key={c.v} className={`cat-b ${form.category === c.v ? "on" : ""}`}
+                        style={form.category === c.v ? { background: `${c.c}15`, borderColor: `${c.c}40` } : {}}
+                        onClick={() => u("category", c.v)}>
                         <span className="cat-ic">{c.icon}</span>
                         <span className="cat-n">{c.v}</span>
                       </button>
                     ))}
                   </div>
                 </div>
-                <div className="f"><label className="fl">Your Skills (comma separated)</label><input className="fi" placeholder="Pipe Repair, Leak Fix, Tap Install" value={form.skills} onChange={e=>u("skills",e.target.value)}/></div>
+                <div className="f"><label className="fl">Your Skills (comma separated)</label><input className="fi" placeholder="Pipe Repair, Leak Fix, Tap Install" value={form.skills} onChange={e => u("skills", e.target.value)} /></div>
                 <div className="frow">
-                  <div className="f"><label className="fl">Experience (years)</label><input className="fi" type="number" min="0" value={form.experience} onChange={e=>u("experience",e.target.value)}/></div>
-                  <div className="f"><label className="fl">Hourly Rate (₹)</label><input className="fi" type="number" placeholder="299" value={form.hourlyRate} onChange={e=>u("hourlyRate",e.target.value)}/></div>
+                  <div className="f"><label className="fl">Experience (years)</label><input className="fi" type="number" min="0" value={form.experience} onChange={e => u("experience", e.target.value)} /></div>
+                  <div className="f"><label className="fl">Hourly Rate (₹)</label><input className="fi" type="number" placeholder="299" value={form.hourlyRate} onChange={e => u("hourlyRate", e.target.value)} /></div>
                 </div>
-                <div className="f" style={{marginBottom:0}}>
+                <div className="f" style={{ marginBottom: 0 }}>
                   <label className="fl">Pricing Type</label>
                   <div className="pt-row">
-                    {["hourly","fixed","negotiable"].map(p=>(
-                      <button key={p} className={`pt-b ${form.pricingType===p?"on":""}`} onClick={()=>u("pricingType",p)}>{p.charAt(0).toUpperCase()+p.slice(1)}</button>
+                    {["hourly", "fixed", "negotiable"].map(p => (
+                      <button key={p} className={`pt-b ${form.pricingType === p ? "on" : ""}`} onClick={() => u("pricingType", p)}>{p.charAt(0).toUpperCase() + p.slice(1)}</button>
                     ))}
                   </div>
                 </div>
               </>}
- 
+
               {/* ── Step 3 ── */}
-              {step===3 && <>
+              {step === 3 && <>
                 <div className="step-h">Your Availability</div>
                 <div className="step-sh">Let customers know when you work.</div>
                 {error && <div className="err-box">⚠ {error}</div>}
                 <div className="f">
                   <label className="fl">Working Days</label>
                   <div className="days-row">
-                    {DAYS.map(d=>(
-                      <button key={d} className={`day-b ${form.days.includes(d)?"on":""}`} onClick={()=>toggleDay(d)}>{d}</button>
+                    {DAYS.map(d => (
+                      <button key={d} className={`day-b ${form.days.includes(d) ? "on" : ""}`} onClick={() => toggleDay(d)}>{d}</button>
                     ))}
                   </div>
                 </div>
-                <div className="frow" style={{marginBottom:0}}>
-                  <div className="f" style={{marginBottom:0}}><label className="fl">Start Time</label><input className="fi" type="time" value={form.startTime} onChange={e=>u("startTime",e.target.value)}/></div>
-                  <div className="f" style={{marginBottom:0}}><label className="fl">End Time</label><input className="fi" type="time" value={form.endTime} onChange={e=>u("endTime",e.target.value)}/></div>
+                <div className="frow" style={{ marginBottom: 0 }}>
+                  <div className="f" style={{ marginBottom: 0 }}><label className="fl">Start Time</label><input className="fi" type="time" value={form.startTime} onChange={e => u("startTime", e.target.value)} /></div>
+                  <div className="f" style={{ marginBottom: 0 }}><label className="fl">End Time</label><input className="fi" type="time" value={form.endTime} onChange={e => u("endTime", e.target.value)} /></div>
                 </div>
               </>}
- 
+
               {/* ── Step 4 ── */}
-              {step===4 && <>
+              {step === 4 && <>
                 <div className="step-h">Your Location</div>
                 <div className="step-sh">Customers nearby will find you here.</div>
                 {error && <div className="err-box">⚠ {error}</div>}
-                <div className="f"><label className="fl">Street Address</label><input className="fi" placeholder="12 Anna Nagar, RS Puram" value={form.address} onChange={e=>u("address",e.target.value)}/></div>
-                <div className="frow" style={{marginBottom:0}}>
-                  <div className="f" style={{marginBottom:0}}><label className="fl">City</label>
-                    <select className="fsel" value={form.city} onChange={e=>u("city",e.target.value)}>
-                      {["Coimbatore","Chennai","Madurai","Trichy","Salem","Erode"].map(c=><option key={c}>{c}</option>)}
+                <div className="f"><label className="fl">Street Address</label><input className="fi" placeholder="12 Anna Nagar, RS Puram" value={form.address} onChange={e => u("address", e.target.value)} /></div>
+                <div className="frow" style={{ marginBottom: 0 }}>
+                  <div className="f" style={{ marginBottom: 0 }}><label className="fl">City</label>
+                    <select className="fsel" value={form.city} onChange={e => u("city", e.target.value)}>
+                      {["Coimbatore", "Chennai", "Madurai", "Trichy", "Salem", "Erode"].map(c => <option key={c}>{c}</option>)}
                     </select>
                   </div>
-                  <div className="f" style={{marginBottom:0}}><label className="fl">Pincode</label><input className="fi" placeholder="641001" value={form.pincode} onChange={e=>u("pincode",e.target.value)}/></div>
+                  <div className="f" style={{ marginBottom: 0 }}><label className="fl">Pincode</label><input className="fi" placeholder="641001" value={form.pincode} onChange={e => u("pincode", e.target.value)} /></div>
                 </div>
               </>}
- 
+
               {/* nav */}
               <div className="jp-nav">
-                {step > 1 && <button className="b-back" onClick={() => { setError(""); setStep(s=>s-1); }}>← Back</button>}
-                <button className="b-next" onClick={step===4?submit:next} disabled={loading}>
+                {step > 1 && <button className="b-back" onClick={() => { setError(""); setStep(s => s - 1); }}>← Back</button>}
+                <button className="b-next" onClick={step === 4 ? submit : next} disabled={loading}>
                   {loading
-                    ? <><div className="spin"/>Submitting…</>
-                    : step===4
-                      ? <>Submit Profile <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></>
-                      : <>Next Step <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></>
+                    ? <><div className="spin" />Submitting…</>
+                    : step === 4
+                      ? <>Submit Profile <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg></>
+                      : <>Next Step <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg></>
                   }
                 </button>
               </div>
