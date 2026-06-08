@@ -452,10 +452,39 @@ const getBookingSummary = async (req, res) => {
   }
 };
 
+const getMyBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({
+      user: req.user._id,
+    })
+      .populate({
+        path: "provider",
+        populate: {
+          path: "user",
+          select: "name avatar phone",
+        },
+      })
+      .populate("service", "title category price")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      bookings,
+    });
+  } catch (error) {
+    console.error("getMyBookings:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookingById,
   getProviderBookings,
+  getMyBookings,
   confirmBooking,
   rejectBooking,
   startBooking,

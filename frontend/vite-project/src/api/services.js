@@ -92,6 +92,8 @@ export const bookingAPI = {
   // GET /api/bookings/provider/list?status=pending&page=1
   getProviderList: (params = {}) => api.get("/bookings/provider/list", { params }),
 
+   getMyBookings: () => api.get("/bookings/my"),
+
   // PATCH /api/bookings/:id/confirm
   confirm: (id) => api.patch(`/bookings/${id}/confirm`),
 

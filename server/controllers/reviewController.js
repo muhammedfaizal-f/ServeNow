@@ -119,11 +119,25 @@ const getProviderReviews = async (req, res) => {
     ]);
 
     // Rating distribution (1★ to 5★ counts)
-    const distribution = await Review.aggregate([
-      { $match: { provider: require("mongoose").Types.ObjectId(req.params.providerId), isVisible: true } },
-      { $group: { _id: "$rating", count: { $sum: 1 } } },
-      { $sort: { _id: -1 } },
-    ]);
+    const mongoose = require("mongoose");
+
+const distribution = await Review.aggregate([
+  {
+    $match: {
+      provider: new mongoose.Types.ObjectId(req.params.providerId),
+      isVisible: true
+    }
+  },
+  {
+    $group: {
+      _id: "$rating",
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { _id: -1 }
+  }
+]);
 
     const ratingDist = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
     distribution.forEach((d) => { ratingDist[d._id] = d.count; });

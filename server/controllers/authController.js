@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { User, Provider } = require("../models");
+const { User, Provider, Service } = require("../models");
 
 // ── Helper: generate JWT ──────────────────────────────────────────────────────
 const generateToken = (id) => {
@@ -20,15 +20,15 @@ const sendTokenResponse = (user, statusCode, res) => {
     success: true,
     token,
     user: {
-      _id:             user._id,
-      name:            user.name,
-      email:           user.email,
-      phone:           user.phone,
-      avatar:          user.avatar,
-      role:            user.role,
-      address:         user.address,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      avatar: user.avatar,
+      role: user.role,
+      address: user.address,
       isEmailVerified: user.isEmailVerified,
-      createdAt:       user.createdAt,
+      createdAt: user.createdAt,
     },
   });
 };
@@ -73,13 +73,15 @@ const register = async (req, res) => {
     });
 
     // If registering as a provider, create a blank Provider profile
-    if (assignedRole === "provider") {
-      await Provider.create({
-        user:      user._id,
-        category:  req.body.category || "Home Cleaning",
-        hourlyRate: req.body.hourlyRate || 0,
-      });
-    }
+   if (assignedRole === "provider") {
+
+  await Provider.create({
+    user: user._id,
+    category: req.body.category || "Home Cleaning",
+    hourlyRate: req.body.hourlyRate || 0,
+  });
+
+}
 
     sendTokenResponse(user, 201, res);
   } catch (error) {
@@ -290,7 +292,7 @@ const resetPassword = async (req, res) => {
       .digest("hex");
 
     const user = await User.findOne({
-      resetPasswordToken:   hashedToken,
+      resetPasswordToken: hashedToken,
       resetPasswordExpires: { $gt: Date.now() },
     });
 
@@ -309,8 +311,8 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    user.password             = newPassword; // hashed by pre-save hook
-    user.resetPasswordToken   = undefined;
+    user.password = newPassword; // hashed by pre-save hook
+    user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
 

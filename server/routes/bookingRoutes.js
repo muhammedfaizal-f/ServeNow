@@ -6,6 +6,7 @@ const {
   createBooking,
   getBookingById,
   getProviderBookings,
+  getMyBookings,
   confirmBooking,
   rejectBooking,
   startBooking,
@@ -24,8 +25,12 @@ router.use(protect);
 // GET /api/bookings/summary
 router.get("/summary", getBookingSummary);
 
-// ── Provider's job list ───────────────────────────────────────────────────────
-// GET /api/bookings/provider/list?status=pending&page=1&date=2025-06-01
+router.get(
+  "/my",
+  authorize("user", "admin"),
+  getMyBookings
+);
+
 router.get(
   "/provider/list",
   authorize("provider", "admin"),

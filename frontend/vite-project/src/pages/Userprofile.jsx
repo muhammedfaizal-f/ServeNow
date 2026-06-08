@@ -35,14 +35,14 @@ export default function UserProfile() {
     // const { user, logout, updateUser } = useAuth();   // real auth
 
     const { user, logout } = useAuth();
-   useEffect(() => {
-  if (user?.role === "provider") {
-    navigate("/provider-profile");
-  } else if (user?.role === "admin") {
-    navigate("/admin-profile");
-  }
-}, [user, navigate]);
-    const [bookings, setBookings] = useState(MOCK_BOOKINGS);
+    useEffect(() => {
+        if (user?.role === "provider") {
+            navigate("/provider-profile");
+        } else if (user?.role === "admin") {
+            navigate("/admin-profile");
+        }
+    }, [user, navigate]);
+    const [bookings, setBookings] = useState([]);
     const [activeTab, setActiveTab] = useState("Overview");
     const [loading, setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
@@ -50,7 +50,22 @@ export default function UserProfile() {
     const [hovered, setHovered] = useState(null);
     const [imgError, setImgError] = useState(false);
 
+    useEffect(() => {
+        loadBookings();
+    }, []);
 
+    const loadBookings = async () => {
+        try {
+            const res = await bookingAPI.getMyBookings();
+
+            if (res.data.success) {
+                setBookings(res.data.bookings);
+                console.log("Bookings:", res.data.bookings);
+            }
+        } catch (err) {
+            console.error("Booking fetch error:", err);
+        }
+    };
 
     const [form, setForm] = useState({
         name: user?.name || "",
@@ -229,10 +244,10 @@ export default function UserProfile() {
                                         const sc = STATUS_CONFIG[b.status] || STATUS_CONFIG.pending;
                                         return (
                                             <div key={b._id} className="bk-card">
-                                                <div className="bk-pav" style={{ background: `${b.provider.color}18`, color: b.provider.color }}>{b.provider.avatar}</div>
+                                                <div className="bk-pav" style={{ background: `${b.provider?.color || "#4A90E2"}18`, color: b.provider?.color || "#4A90E2" }}>{b.provider?.avatar || "U"}</div>
                                                 <div className="bk-info">
                                                     <div className="bk-name">{b.service.title}</div>
-                                                    <div className="bk-sub">{b.provider.name} · {b.service.category}</div>
+                                                    <div className="bk-sub">{b.provider?.name || "Unknown Provider"} · {b.service.category}</div>
                                                     <div className="bk-meta">
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>{new Date(b.bookingDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</span>
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>{b.timeSlot.start}</span>
@@ -275,7 +290,7 @@ export default function UserProfile() {
                                     <div className="act-h">💳 Recent Activity</div>
                                     {bookings.filter(b => b.status === "completed").slice(0, 5).map(b => (
                                         <div className="act-row" key={b._id}>
-                                            <div className="act-dot" style={{ background: b.provider.color }} />
+                                            <div className="act-dot" style={{ background: b.provider?.color || "#4A90E2" }} />
                                             <div className="act-info">
                                                 <div className="act-title">{b.service.title}</div>
                                                 <div className="act-time">{new Date(b.bookingDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</div>
@@ -323,10 +338,18 @@ export default function UserProfile() {
                                         const sc = STATUS_CONFIG[b.status] || STATUS_CONFIG.pending;
                                         return (
                                             <div key={b._id} className="bk-card">
-                                                <div className="bk-pav" style={{ background: `${b.provider.color}18`, color: b.provider.color }}>{b.provider.avatar}</div>
+                                                <div
+                                                    className="bk-pav"
+                                                    style={{
+                                                        background: `${b.provider?.color || "#4A90E2"}18`,
+                                                        color: b.provider?.color || "#4A90E2"
+                                                    }}
+                                                >
+                                                    {b.provider?.avatar || "U"}
+                                                </div>
                                                 <div className="bk-info">
                                                     <div className="bk-name">{b.service.title}</div>
-                                                    <div className="bk-sub">{b.provider.name} · {b.service.category}</div>
+                                                    <div className="bk-sub">{b.provider?.name || "Unknown Provider"} · {b.service.category}</div>
                                                     <div className="bk-meta">
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>{new Date(b.bookingDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span>
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>{b.timeSlot.start}</span>
@@ -374,10 +397,10 @@ export default function UserProfile() {
                                     const paid = b.status === "completed" || b.paymentStatus === "paid";
                                     return (
                                         <div className="tx-row" key={b._id}>
-                                            <div className="tx-icon" style={{ background: `${b.provider.color}18` }}>{b.provider.avatar}</div>
+                                            <div className="tx-icon" style={{ background: `${b.provider?.color || "#4A90E2"}18` }}>{b.provider?.avatar || "U"}</div>
                                             <div className="tx-info">
                                                 <div className="tx-title">{b.service.title}</div>
-                                                <div className="tx-sub">{b.provider.name} · {b.service.category}</div>
+                                                <div className="tx-sub">{b.provider?.name || "Unknown Provider"} · {b.service.category}</div>
                                             </div>
                                             <div className="tx-right">
                                                 <div className="tx-amt" style={{ color: paid ? "#FF8C5A" : "rgba(255,255,255,.35)" }}>
