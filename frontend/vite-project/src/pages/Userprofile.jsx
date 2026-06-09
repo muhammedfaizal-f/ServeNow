@@ -247,7 +247,7 @@ export default function UserProfile() {
                                                 <div className="bk-pav" style={{ background: `${b.provider?.color || "#4A90E2"}18`, color: b.provider?.color || "#4A90E2" }}>{b.provider?.avatar || "U"}</div>
                                                 <div className="bk-info">
                                                     <div className="bk-name">{b.service.title}</div>
-                                                    <div className="bk-sub">{b.provider?.name || "Unknown Provider"} · {b.service.category}</div>
+                                                    <div className="bk-sub">{b.provider?.user?.name || "Unknown Provider"} · {b.service.category}</div>
                                                     <div className="bk-meta">
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>{new Date(b.bookingDate).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</span>
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>{b.timeSlot.start}</span>
@@ -349,7 +349,7 @@ export default function UserProfile() {
                                                 </div>
                                                 <div className="bk-info">
                                                     <div className="bk-name">{b.service.title}</div>
-                                                    <div className="bk-sub">{b.provider?.name || "Unknown Provider"} · {b.service.category}</div>
+                                                    <div className="bk-sub">{b.provider?.user?.name || "Unknown Provider"} · {b.service.category}</div>
                                                     <div className="bk-meta">
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>{new Date(b.bookingDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span>
                                                         <span className="bk-tag"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>{b.timeSlot.start}</span>
@@ -360,7 +360,16 @@ export default function UserProfile() {
                                                     <div className="bk-amt">₹{b.totalAmount}</div>
                                                     <div className="bk-status" style={{ background: sc.bg, color: sc.color, border: `0.5px solid ${sc.color}30` }}>{sc.icon} {sc.label}</div>
                                                     {b.status === "completed" && !b.isReviewed && (
-                                                        <button className="bk-action">Rate ⭐</button>
+                                                        <button
+                                                            className="bk-action"
+                                                            onClick={() =>
+                                                                navigate(
+                                                                    `/reviews?mode=write&bookingId=${b._id}&providerId=${b.provider?._id}`
+                                                                )
+                                                            }
+                                                        >
+                                                            Rate ⭐
+                                                        </button>
                                                     )}
                                                     {["pending", "confirmed"].includes(b.status) && (
                                                         <button className="bk-action">Cancel</button>
@@ -400,7 +409,7 @@ export default function UserProfile() {
                                             <div className="tx-icon" style={{ background: `${b.provider?.color || "#4A90E2"}18` }}>{b.provider?.avatar || "U"}</div>
                                             <div className="tx-info">
                                                 <div className="tx-title">{b.service.title}</div>
-                                                <div className="tx-sub">{b.provider?.name || "Unknown Provider"} · {b.service.category}</div>
+                                                <div className="tx-sub">{b.provider?.user?.name || "Unknown Provider"} · {b.service.category}</div>
                                             </div>
                                             <div className="tx-right">
                                                 <div className="tx-amt" style={{ color: paid ? "#FF8C5A" : "rgba(255,255,255,.35)" }}>

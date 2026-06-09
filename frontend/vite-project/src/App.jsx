@@ -12,9 +12,11 @@ import ProviderProfile from "./pages/ProviderProfile";
 import AdminProfile from "./pages/AdminProfile";
 import JoinProvider from "./pages/JoinProvider"; // match your exact filename
 import ExploreProviders from "./pages/ExploreProviders"; // match your exact filename
+import ReviewPage from "./pages/ReviewPage";
 import BookNow from "./pages/BookNow";
 import LocationSearch from "./pages/LocationSearch"; // match your exact filename
 import ReactDOM from 'react-dom/client'
+
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
           } />
           <Route path="/join-provider" element={<JoinProvider />} />
           <Route path="/providers" element={<ExploreProviders />} />
+           <Route path="/reviews" element={<ReviewPage />} />
           <Route path="/search" element={<LocationSearch />} />
           <Route path="/book/:id" element={
             <ProtectedRoute><BookNow /></ProtectedRoute>
