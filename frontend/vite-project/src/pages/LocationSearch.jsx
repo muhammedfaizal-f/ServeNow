@@ -146,11 +146,15 @@ export default function LocationSearch() {
     [query, city, category, sort, avail, setSearchParams]
   );
 
-  useEffect(() => {
-    if (searchParams.get("q") || searchParams.get("category")) {
-      doSearch();
-    }
-  }, []);
+ useEffect(() => {
+  if (
+    searchParams.get("search") ||
+    searchParams.get("q") ||
+    searchParams.get("category")
+  ) {
+    doSearch();
+  }
+}, []);
 
   const handleBook = (id) => {
     setBooked(id);

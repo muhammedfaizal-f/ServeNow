@@ -41,7 +41,7 @@ function App() {
           } />
           <Route path="/join-provider" element={<JoinProvider />} />
           <Route path="/providers" element={<ExploreProviders />} />
-          <Route path="/reviews" element={<ReviewPage />} />
+          <Route path="/search" element={<LocationSearch />} />
           <Route path="/reviews" element={
             <ProtectedRoute>
               <ReviewPage />

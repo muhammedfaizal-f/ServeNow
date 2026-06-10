@@ -11,10 +11,7 @@ import {
   signInWithPhoneNumber
 } from "../firebase";
 
-const ROLES = [
-  { value: "user", label: "Customer", icon: "👤", desc: "Book services" },
-  { value: "provider", label: "Provider", icon: "🔧", desc: "Offer services" },
-];
+
 
 export default function LoginRegister() {
   const navigate = useNavigate();
@@ -210,23 +207,12 @@ export default function LoginRegister() {
             </div>
             <div><div className="ch">{mode === "login" ? "Welcome back 👋" : "Join ServeNow 🚀"}</div><div className="cs" style={{ marginTop: 4 }}>{mode === "login" ? "Enter your credentials to continue." : "Create your free account in under a minute."}</div></div>
 
-            {mode === "register" && (
-              <div>
-                <div className="fl" style={{ marginBottom: 8 }}>I want to</div>
-                <div className="role-row">
-                  {ROLES.map(r => (
-                    <button key={r.value} className={`role-btn ${form.role === r.value ? "on" : ""}`} onClick={() => u("role", r.value)}>
-                      <span className="ri">{r.icon}</span><span className="rl">{r.label}</span><span className="rd">{r.desc}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+            {mode === "register" && null}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {mode === "register" && (
                 <div className="frow">
-                  <div className="fg"><label className="fl">Full Name</label><input className="fi" placeholder="Arun Kumar" value={form.name} onChange={e => u("name", e.target.value)} /></div>
+                  <div className="fg"><label className="fl">Full Name</label><input className="fi" placeholder="Muhammed Faizal F" value={form.name} onChange={e => u("name", e.target.value)} /></div>
                   <div className="fg"><label className="fl">Phone</label><input className="fi" placeholder="9876543210" value={form.phone} onChange={e => u("phone", e.target.value)} /></div>
                 </div>
               )}

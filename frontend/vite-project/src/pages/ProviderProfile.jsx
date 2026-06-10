@@ -394,7 +394,7 @@ export default function ProviderProfile() {
                 {provider.isAvailable ? "Available" : "Busy / Unavailable"}
               </div>
             )}
-            <button className="pv-logout"  onClick={logout}>
+            <button className="pv-logout" onClick={logout}>
               <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" /></svg>
               Sign Out
             </button>
@@ -670,6 +670,35 @@ export default function ProviderProfile() {
                           <div className="svc-dur">⏱ {s.estimatedDuration} min · {s.pricingType}</div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+                          <button
+                            onClick={async () => {
+                              const newPrice = prompt("Enter new price", s.price);
+
+                              if (!newPrice) return;
+
+                              try {
+                                await api.put(`/services/${s._id}`, {
+                                  price: Number(newPrice)
+                                });
+
+                                showToast("Price updated successfully");
+                                fetchServices();
+                              } catch (err) {
+                                showToast("Failed to update price", "error");
+                              }
+                            }}
+                            style={{
+                              fontSize: "12px",
+                              padding: "4px 10px",
+                              borderRadius: "7px",
+                              border: "0.5px solid rgba(74,144,226,.25)",
+                              background: "rgba(74,144,226,.06)",
+                              color: "#60A5FA",
+                              cursor: "pointer"
+                            }}
+                          >
+                            Edit Price
+                          </button>
                           <Badge label={s.isActive ? "Active" : "Inactive"} color={s.isActive ? "#10B981" : "#6B7280"} bg={s.isActive ? "rgba(16,185,129,.1)" : "rgba(107,114,128,.1)"} />
                           <button
                             onClick={() => toggleService(s._id, s.isActive)}

@@ -262,15 +262,22 @@ body {
 }
 
 .sort-sel {
-    background: rgba(255, 255, 255, .04);
-    border: 0.5px solid rgba(255, 255, 255, .09);
-    border-radius: 8px;
-    padding: 7px 10px;
-    color: white;
-    font-size: 13px;
+    background: #111B47;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #fff;
+    font-size: 14px;
     outline: none;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
+    min-width: 220px;
+}
+
+.sort-sel option {
+    background: #08112F;
+    color: #fff;
+    padding: 12px;
 }
 
 /* error banner */
