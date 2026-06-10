@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute"; // match your exact filename
-import ProviderRoute from "./components/ProviderRoute"; 
+import ProviderRoute from "./components/ProviderRoute";
 import AdminRoute from "./components/AdminRoute";
 
 
@@ -41,8 +41,12 @@ function App() {
           } />
           <Route path="/join-provider" element={<JoinProvider />} />
           <Route path="/providers" element={<ExploreProviders />} />
-           <Route path="/reviews" element={<ReviewPage />} />
-          <Route path="/search" element={<LocationSearch />} />
+          <Route path="/reviews" element={<ReviewPage />} />
+          <Route path="/reviews" element={
+            <ProtectedRoute>
+              <ReviewPage />
+            </ProtectedRoute>
+          } />
           <Route path="/book/:id" element={
             <ProtectedRoute><BookNow /></ProtectedRoute>
           } />

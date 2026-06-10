@@ -16,25 +16,13 @@ const { protect, authorize } = require("../middleware/authMiddleware");
 
 // ── Public routes ─────────────────────────────────────────────────────────────
 
-// GET /api/reviews/provider/:providerId
-// GET /api/reviews/provider/:providerId?sort=newest&page=1&rating=5
 router.get("/provider/:providerId", getProviderReviews);
 
-// GET /api/reviews/:id
+router.get("/my", protect, getMyReviews);
+
 router.get("/:id", getReviewById);
 
-// ── Private routes ────────────────────────────────────────────────────────────
-
-// POST /api/reviews  ← user submits review after completed booking
-router.post(
-  "/",
-  protect,
-  authorize("user", "admin"),
-  createReview
-);
-
-// GET /api/reviews/my  ← user sees all their own reviews
-router.get("/my", protect, getMyReviews);
+router.post("/", protect, authorize("user", "admin"), createReview);
 
 // PUT /api/reviews/:id  ← user edits their review
 router.put("/:id", protect, updateReview);

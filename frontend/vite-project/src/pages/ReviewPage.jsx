@@ -319,7 +319,7 @@ export default function ReviewPage() {
                       <div className="prov-mini-name">{providerName}</div>
                       <div className="prov-mini-role">{providerCategory}</div>
                       {booking && (
-                        <div style={{ fontSize:12, color:"rgba(255,255,255,.3)", marginTop:4 }}>
+                       <div className="prov-mini-booking">
                           Booking on {new Date(booking.bookingDate).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})} · {booking.timeSlot?.start}
                         </div>
                       )}
