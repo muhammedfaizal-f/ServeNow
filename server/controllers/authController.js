@@ -73,15 +73,15 @@ const register = async (req, res) => {
     });
 
     // If registering as a provider, create a blank Provider profile
-   if (assignedRole === "provider") {
+    if (assignedRole === "provider") {
 
-  await Provider.create({
-    user: user._id,
-    category: req.body.category || "Home Cleaning",
-    hourlyRate: req.body.hourlyRate || 0,
-  });
+      await Provider.create({
+        user: user._id,
+        category: req.body.category || "Home Cleaning",
+        hourlyRate: req.body.hourlyRate || 0,
+      });
 
-}
+    }
 
     sendTokenResponse(user, 201, res);
   } catch (error) {

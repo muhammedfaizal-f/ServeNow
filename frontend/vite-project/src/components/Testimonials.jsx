@@ -101,14 +101,14 @@ const testimonials = [
     verified: true,
   },
 ];
- 
+
 const stats = [
   { value: "10,000+", label: "Happy Customers" },
   { value: "4.8/5", label: "Overall Rating" },
   { value: "98%", label: "Would Recommend" },
   { value: "500+", label: "Reviews This Month" },
 ];
- 
+
 const StarRow = ({ rating, color = "#F59E0B" }) => (
   <span style={{ display: "inline-flex", gap: 2 }}>
     {[...Array(5)].map((_, i) => (
@@ -116,18 +116,18 @@ const StarRow = ({ rating, color = "#F59E0B" }) => (
         fill={i < rating ? color : "none"}
         stroke={i < rating ? color : "rgba(255,255,255,0.18)"}
         strokeWidth="1.5">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ))}
   </span>
 );
- 
+
 const Testimonials = () => {
   const [active, setActive] = useState(0);
   const [liked, setLiked] = useState({});
   const [animating, setAnimating] = useState(false);
   const intervalRef = useRef(null);
- 
+
   const goTo = (idx) => {
     if (animating) return;
     setAnimating(true);
@@ -136,31 +136,31 @@ const Testimonials = () => {
       setAnimating(false);
     }, 200);
   };
- 
+
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setActive(prev => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(intervalRef.current);
   }, []);
- 
+
   const handleLike = (i) => {
     setLiked(prev => ({ ...prev, [i]: !prev[i] }));
   };
- 
+
   const prev = () => goTo((active - 1 + testimonials.length) % testimonials.length);
   const next = () => goTo((active + 1) % testimonials.length);
- 
 
-    return (
-        <>
-        <section className="tm-root">
+
+  return (
+    <>
+      <section className="tm-root">
         <div className="tm-blob tm-blob-1" />
         <div className="tm-blob tm-blob-2" />
         <div className="tm-quote-bg">"</div>
- 
+
         <div className="tm-inner">
- 
+
           {/* Stats bar */}
           <div className="tm-stats">
             {stats.map((s, i) => (
@@ -170,7 +170,7 @@ const Testimonials = () => {
               </div>
             ))}
           </div>
- 
+
           {/* Header */}
           <div className="tm-header">
             <div className="tm-eyebrow">
@@ -181,10 +181,10 @@ const Testimonials = () => {
             <h2 className="tm-title">What Our <span>Customers</span> Say</h2>
             <p className="tm-subtitle">Over 10,000 happy customers across Coimbatore. Here's what they think.</p>
           </div>
- 
+
           {/* Featured + Mini stack */}
           <div className="tm-featured">
- 
+
             {/* Big active card */}
             <div
               className="tm-big-card"
@@ -202,7 +202,7 @@ const Testimonials = () => {
               }}>
                 "
               </div>
- 
+
               <div className="tm-big-top">
                 <div
                   className="tm-big-avatar"
@@ -217,7 +217,7 @@ const Testimonials = () => {
                   <div className="tm-big-name">{testimonials[active].name}</div>
                   <div className="tm-big-role">{testimonials[active].role}</div>
                   <div className="tm-big-location">
-                    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
                     {testimonials[active].location}
                   </div>
                 </div>
@@ -227,16 +227,16 @@ const Testimonials = () => {
                   </div>
                 )}
               </div>
- 
+
               <StarRow rating={testimonials[active].rating} color={testimonials[active].serviceColor} />
- 
+
               <p
                 className="tm-big-text"
                 style={{ opacity: animating ? 0 : 1 }}
               >
                 "{testimonials[active].text}"
               </p>
- 
+
               <div className="tm-big-bottom">
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
                   <div
@@ -257,7 +257,7 @@ const Testimonials = () => {
                     className={`tm-helpful-btn ${liked[active] ? "liked" : ""}`}
                     onClick={() => handleLike(active)}
                   >
-                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /></svg>
                     {liked[active]
                       ? testimonials[active].helpful + 1
                       : testimonials[active].helpful} helpful
@@ -265,7 +265,7 @@ const Testimonials = () => {
                 </div>
               </div>
             </div>
- 
+
             {/* Mini cards */}
             <div className="tm-mini-stack">
               {testimonials.map((t, i) => (
@@ -307,11 +307,11 @@ const Testimonials = () => {
               ))}
             </div>
           </div>
- 
+
           {/* Navigation */}
           <div className="tm-nav">
             <button className="tm-nav-btn" onClick={prev}>
-              <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" /></svg>
             </button>
             <div className="tm-dots">
               {testimonials.map((t, i) => (
@@ -327,25 +327,25 @@ const Testimonials = () => {
               ))}
             </div>
             <button className="tm-nav-btn" onClick={next}>
-              <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" /></svg>
             </button>
           </div>
- 
+
           {/* CTA */}
           <div className="tm-cta">
             <span className="tm-cta-text">Used ServeNow? Share your experience.</span>
             <Link to={"/reviews"}>
-            <button className="tm-cta-btn" >
-              <svg viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-              Write a Review
-            </button>
+              <button className="tm-cta-btn" >
+                <svg viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                Write a Review
+              </button>
             </Link>
           </div>
- 
+
         </div>
       </section>
-        </>
-    )
+    </>
+  )
 }
 
 export default Testimonials

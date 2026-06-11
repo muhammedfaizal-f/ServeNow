@@ -158,13 +158,13 @@ export default function ExploreProviders() {
   // ── Handle Book Now ───────────────────────────────────────────────────────
   // Pass full provider via navigate state so BookNow doesn't need another fetch
   const handleBook = (p) => {
-  console.log("Provider object:", p);
-  console.log("Provider _id:", p._id);
+    console.log("Provider object:", p);
+    console.log("Provider _id:", p._id);
 
-  navigate(`/book/${p._id}`, {
-    state: { provider: p._raw || p }
-  });
-};
+    navigate(`/book/${p._id}`, {
+      state: { provider: p._raw || p }
+    });
+  };
 
   // ── Clear filters ─────────────────────────────────────────────────────────
   const clearFilters = () => {
@@ -175,52 +175,52 @@ export default function ExploreProviders() {
   return (
     <>
       <div className="ep">
- 
+
         {/* ── Topbar ── */}
         <div className="ep-bar">
           <div className="ep-logo" onClick={() => navigate("/")}>Serve<span>Now</span></div>
           <div className="ep-sw">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
             <input
               className="ep-si"
               placeholder="Search providers, skills…"
               value={search}
-              onChange={e => { setSearch(e.target.value);setCategory("All"); setPage(1); }}
+              onChange={e => { setSearch(e.target.value); setCategory("All"); setPage(1); }}
               onKeyDown={e => e.key === "Enter" && fetchProviders()}
             />
           </div>
           <button className={`ep-fb ${showFilt ? "on" : ""}`} onClick={() => setShowFilt(f => !f)}>
-            <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+            <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="11" y1="18" x2="13" y2="18" /></svg>
             Filters {showFilt ? "▲" : "▼"}
           </button>
         </div>
- 
+
         {/* ── Filter panel ── */}
         {showFilt && (
           <div className="ep-fp">
             <span className="fp-lbl">Price ₹/hr:</span>
             <div className="fp-range">
-              <input className="fp-in" placeholder="Min" value={minRate} onChange={e => setMinRate(e.target.value)} type="number"/>
+              <input className="fp-in" placeholder="Min" value={minRate} onChange={e => setMinRate(e.target.value)} type="number" />
               <span className="fp-sep">–</span>
-              <input className="fp-in" placeholder="Max" value={maxRate} onChange={e => setMaxRate(e.target.value)} type="number"/>
+              <input className="fp-in" placeholder="Max" value={maxRate} onChange={e => setMaxRate(e.target.value)} type="number" />
             </div>
-            <span className="fp-lbl" style={{ marginLeft:8 }}>Available now:</span>
+            <span className="fp-lbl" style={{ marginLeft: 8 }}>Available now:</span>
             <div className="avail-tog" onClick={() => setAvail(a => !a)}>
               <div className="tog-tr" style={{ background: avail ? "#FF6B35" : "rgba(255,255,255,.1)" }}>
-                <div className="tog-th" style={{ transform: avail ? "translateX(16px)" : "translateX(0)" }}/>
+                <div className="tog-th" style={{ transform: avail ? "translateX(16px)" : "translateX(0)" }} />
               </div>
               {avail ? "Yes" : "No"}
             </div>
             <button
               onClick={clearFilters}
-              style={{ marginLeft:"auto", padding:"6px 14px", border:"0.5px solid rgba(255,255,255,.1)", borderRadius:8, background:"transparent", color:"rgba(255,255,255,.45)", fontSize:12, cursor:"pointer", fontFamily:"'DM Sans',sans-serif" }}>
+              style={{ marginLeft: "auto", padding: "6px 14px", border: "0.5px solid rgba(255,255,255,.1)", borderRadius: 8, background: "transparent", color: "rgba(255,255,255,.45)", fontSize: 12, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
               Clear all
             </button>
           </div>
         )}
- 
+
         <div className="ep-con">
- 
+
           {/* categories */}
           <div className="ep-cats">
             {CATEGORIES.map(c => (
@@ -233,7 +233,7 @@ export default function ExploreProviders() {
               </button>
             ))}
           </div>
- 
+
           {/* error banner */}
           {error && (
             <div className="ep-err">
@@ -241,7 +241,7 @@ export default function ExploreProviders() {
               <button onClick={fetchProviders}>Retry</button>
             </div>
           )}
- 
+
           {/* toolbar */}
           <div className="ep-tb">
             <div className="ep-cnt">
@@ -257,14 +257,14 @@ export default function ExploreProviders() {
               </select>
             </div>
           </div>
- 
+
           {/* skeletons */}
           {loading && (
             <div className="ep-grid">
-              {[1,2,3,4,5,6].map(i => <div key={i} className="skel"/>)}
+              {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="skel" />)}
             </div>
           )}
- 
+
           {/* empty state */}
           {!loading && !error && providers.length === 0 && (
             <div className="ep-empty">
@@ -272,7 +272,7 @@ export default function ExploreProviders() {
               <div className="ep-empty-t">No providers found. Try adjusting filters.</div>
             </div>
           )}
- 
+
           {/* provider cards */}
           {!loading && providers.length > 0 && (
             <div className="ep-grid">
@@ -280,55 +280,55 @@ export default function ExploreProviders() {
                 <div
                   key={p._id}
                   className={`pc ${hovered === p._id ? "hov" : ""}`}
-                  style={hovered === p._id ? { borderColor:`${p.color}28` } : {}}
+                  style={hovered === p._id ? { borderColor: `${p.color}28` } : {}}
                   onMouseEnter={() => setHovered(p._id)}
                   onMouseLeave={() => setHovered(null)}
                 >
                   {/* banner */}
-                  <div className="pc-ban" style={{ background:`linear-gradient(135deg,${p.bg},${p.color}18)` }}>
+                  <div className="pc-ban" style={{ background: `linear-gradient(135deg,${p.bg},${p.color}18)` }}>
                     <div
                       className="pc-av-pill"
                       style={{
                         background: p.available ? "rgba(16,185,129,.15)" : "rgba(100,100,100,.15)",
-                        color:      p.available ? "#34D399"              : "rgba(255,255,255,.35)",
-                        border:    `0.5px solid ${p.available ? "rgba(16,185,129,.25)" : "rgba(255,255,255,.08)"}`,
+                        color: p.available ? "#34D399" : "rgba(255,255,255,.35)",
+                        border: `0.5px solid ${p.available ? "rgba(16,185,129,.25)" : "rgba(255,255,255,.08)"}`,
                       }}
                     >
-                      <span className="av-dot" style={{ background: p.available ? "#10B981" : "#6B7280" }}/>
+                      <span className="av-dot" style={{ background: p.available ? "#10B981" : "#6B7280" }} />
                       {p.available ? "Available" : "Busy"}
                     </div>
                   </div>
- 
+
                   <div className="pc-body">
                     {/* avatar + badge */}
                     <div className="pc-tr">
-                      <div className="pc-av" style={{ background:p.bg, color:p.color }}>{p.avatar}</div>
+                      <div className="pc-av" style={{ background: p.bg, color: p.color }}>{p.avatar}</div>
                       <div
                         className="pc-badge"
-                        style={{ background:`${p.badgeColor}18`, color:p.badgeColor, border:`0.5px solid ${p.badgeColor}30` }}
+                        style={{ background: `${p.badgeColor}18`, color: p.badgeColor, border: `0.5px solid ${p.badgeColor}30` }}
                       >
                         {p.badge}
                       </div>
                     </div>
- 
+
                     {/* info */}
                     <div>
                       <div className="pc-name">{p.name}</div>
                       <div className="pc-role">{p.role}</div>
                       <div className="pc-loc">
-                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
                         {p.location}
                       </div>
                     </div>
- 
+
                     {/* rating */}
                     <div className="pc-rat">
-                      <Stars r={p.rating} c={p.color}/>
+                      <Stars r={p.rating} c={p.color} />
                       <span className="pc-rn">{p.rating || "—"}</span>
-                      <span style={{ color:"rgba(255,255,255,.15)" }}>·</span>
+                      <span style={{ color: "rgba(255,255,255,.15)" }}>·</span>
                       <span className="pc-rv">{p.reviews} reviews</span>
                     </div>
- 
+
                     {/* skills */}
                     {p.skills.length > 0 && (
                       <div className="pc-skills">
@@ -336,45 +336,45 @@ export default function ExploreProviders() {
                           <span
                             key={i}
                             className="pc-sk"
-                            style={{ color:p.color, borderColor:`${p.color}28`, background:`${p.color}0e` }}
+                            style={{ color: p.color, borderColor: `${p.color}28`, background: `${p.color}0e` }}
                           >
                             {s}
                           </span>
                         ))}
                       </div>
                     )}
- 
+
                     {/* stats */}
                     <div className="pc-meta">
                       <div><div className="pm-v">{p.jobs}</div><div className="pm-l">Jobs</div></div>
-                      <div className="pm-d"/>
+                      <div className="pm-d" />
                       <div><div className="pm-v">₹{p.price}/hr</div><div className="pm-l">Starting</div></div>
-                      <div className="pm-d"/>
-                      <div><div className="pm-v" style={{ color:p.color }}>{p.rating || "—"}★</div><div className="pm-l">Rating</div></div>
+                      <div className="pm-d" />
+                      <div><div className="pm-v" style={{ color: p.color }}>{p.rating || "—"}★</div><div className="pm-l">Rating</div></div>
                     </div>
- 
+
                     {/* response time */}
                     <div className="pc-resp">
-                      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                       Response: {p.response}
                     </div>
- 
+
                     {/* actions */}
                     <div className="pc-acts">
                       <button className="btn-msg" title="Chat">
-                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" /></svg>
                       </button>
                       <button
                         className={`btn-bk ${booked === p._id ? "ok" : ""}`}
                         style={booked !== p._id ? {
-                          background:  p.color,
-                          color:       "white",
-                          boxShadow:   hovered === p._id ? `0 4px 14px ${p.color}40` : "none",
+                          background: p.color,
+                          color: "white",
+                          boxShadow: hovered === p._id ? `0 4px 14px ${p.color}40` : "none",
                         } : {}}
                         onClick={() => handleBook(p)}
                       >
                         {booked === p._id
-                          ? <><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Going…</>
+                          ? <><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>Going…</>
                           : `Book · ₹${p.price}/hr`
                         }
                       </button>
@@ -384,7 +384,7 @@ export default function ExploreProviders() {
               ))}
             </div>
           )}
- 
+
           {/* pagination */}
           {total > LIMIT && !loading && (
             <div className="ep-pag">
@@ -394,10 +394,10 @@ export default function ExploreProviders() {
               {Array.from({ length: Math.ceil(total / LIMIT) }, (_, i) => (
                 <button
                   key={i}
-                  className={`pag-btn ${page === i+1 ? "on" : ""}`}
-                  onClick={() => setPage(i+1)}
+                  className={`pag-btn ${page === i + 1 ? "on" : ""}`}
+                  onClick={() => setPage(i + 1)}
                 >
-                  {i+1}
+                  {i + 1}
                 </button>
               ))}
               {page < Math.ceil(total / LIMIT) && (
@@ -405,7 +405,7 @@ export default function ExploreProviders() {
               )}
             </div>
           )}
- 
+
         </div>
       </div>
     </>

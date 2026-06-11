@@ -48,10 +48,10 @@ const getDashboardStats = async (req, res) => {
       {
         $group: {
           _id: {
-            year:  { $year: "$createdAt" },
+            year: { $year: "$createdAt" },
             month: { $month: "$createdAt" },
           },
-          count:   { $sum: 1 },
+          count: { $sum: 1 },
           revenue: { $sum: "$totalAmount" },
         },
       },
@@ -63,16 +63,16 @@ const getDashboardStats = async (req, res) => {
       { $match: { status: "completed" } },
       {
         $lookup: {
-          from:         "services",
-          localField:   "service",
+          from: "services",
+          localField: "service",
           foreignField: "_id",
-          as:           "serviceData",
+          as: "serviceData",
         },
       },
       { $unwind: "$serviceData" },
       {
         $group: {
-          _id:   "$serviceData.category",
+          _id: "$serviceData.category",
           count: { $sum: 1 },
         },
       },
@@ -82,7 +82,7 @@ const getDashboardStats = async (req, res) => {
 
     // Recent 5 bookings
     const recentBookings = await Booking.find()
-      .populate("user",    "name email")
+      .populate("user", "name email")
       .populate("service", "title category")
       .sort({ createdAt: -1 })
       .limit(5);
@@ -122,11 +122,11 @@ const getAllUsers = async (req, res) => {
     const { search, role, isActive, page = 1, limit = 20 } = req.query;
 
     const filter = {};
-    if (role)     filter.role     = role;
+    if (role) filter.role = role;
     if (isActive !== undefined) filter.isActive = isActive === "true";
     if (search) {
       filter.$or = [
-        { name:  { $regex: search, $options: "i" } },
+        { name: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
         { phone: { $regex: search, $options: "i" } },
       ];
@@ -144,9 +144,9 @@ const getAllUsers = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success:    true,
+      success: true,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       users,
     });
@@ -180,8 +180,8 @@ const toggleUserStatus = async (req, res) => {
     await user.save();
 
     res.status(200).json({
-      success:  true,
-      message:  `User account ${user.isActive ? "activated" : "deactivated"}.`,
+      success: true,
+      message: `User account ${user.isActive ? "activated" : "deactivated"}.`,
       isActive: user.isActive,
     });
   } catch (error) {
@@ -201,7 +201,7 @@ const getAllProviders = async (req, res) => {
 
     const filter = {};
     if (isVerified !== undefined) filter.isVerified = isVerified === "true";
-    if (isActive   !== undefined) filter.isActive   = isActive   === "true";
+    if (isActive !== undefined) filter.isActive = isActive === "true";
     if (category) filter.category = category;
 
     const skip = (Number(page) - 1) * Number(limit);
@@ -216,9 +216,9 @@ const getAllProviders = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success:    true,
+      success: true,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       providers,
     });
@@ -244,12 +244,12 @@ const verifyProvider = async (req, res) => {
     }
 
     provider.isVerified = true;
-    provider.badge      = provider.badge || "Pro Verified";
+    provider.badge = provider.badge || "Pro Verified";
     await provider.save();
 
     res.status(200).json({
-      success:  true,
-      message:  `Provider ${provider.user.name} has been verified.`,
+      success: true,
+      message: `Provider ${provider.user.name} has been verified.`,
       provider,
     });
   } catch (error) {
@@ -274,8 +274,8 @@ const toggleProviderStatus = async (req, res) => {
     await provider.save();
 
     res.status(200).json({
-      success:  true,
-      message:  `Provider ${provider.isActive ? "reactivated" : "suspended"}.`,
+      success: true,
+      message: `Provider ${provider.isActive ? "reactivated" : "suspended"}.`,
       isActive: provider.isActive,
     });
   } catch (error) {
@@ -300,7 +300,7 @@ const getAllBookings = async (req, res) => {
 
     const [bookings, total] = await Promise.all([
       Booking.find(filter)
-        .populate("user",    "name email phone")
+        .populate("user", "name email phone")
         .populate("service", "title category")
         .populate({
           path: "provider",
@@ -313,9 +313,9 @@ const getAllBookings = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success:    true,
+      success: true,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       bookings,
     });
@@ -333,7 +333,7 @@ const getAllBookings = async (req, res) => {
 const getFlaggedReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ isFlagged: true })
-      .populate("user",     "name email")
+      .populate("user", "name email")
       .populate("provider", "category")
       .sort({ createdAt: -1 });
 

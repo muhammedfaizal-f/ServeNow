@@ -1,433 +1,512 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
- 
-        .hiw-root {
-          background: #060D25;
-          padding: 100px 0 90px;
-          position: relative;
-          overflow: hidden;
-          font-family: 'DM Sans', sans-serif;
-        }
- 
-        .hiw-root::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 50%;
-          transform: translateX(-50%);
-          width: 700px; height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(74,144,226,0.35), transparent);
-        }
- 
-        .hiw-blob {
-          position: absolute;
-          border-radius: 50%;
-          pointer-events: none;
-          filter: blur(120px);
-        }
-        .hiw-blob-1 {
-          width: 500px; height: 500px;
-          background: radial-gradient(circle, rgba(74,144,226,0.1) 0%, transparent 70%);
-          top: -100px; left: -100px;
-        }
-        .hiw-blob-2 {
-          width: 400px; height: 400px;
-          background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
-          bottom: -80px; right: -80px;
-        }
- 
-        .hiw-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 2rem;
-          position: relative;
-          z-index: 2;
-        }
- 
-        /* Header */
-        .hiw-header {
-          text-align: center;
-          margin-bottom: 64px;
-        }
- 
-        .hiw-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 16px;
-        }
-        .hiw-eyebrow-line {
-          width: 24px; height: 2px;
-          background: #4A90E2;
-          border-radius: 2px;
-        }
-        .hiw-eyebrow-text {
-          font-size: 12px;
-          font-weight: 500;
-          color: #4A90E2;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
- 
-        .hiw-title {
-          font-family: 'Syne', sans-serif;
-          font-size: clamp(30px, 4vw, 46px);
-          font-weight: 800;
-          color: white;
-          letter-spacing: -1.2px;
-          line-height: 1.1;
-          margin-bottom: 14px;
-        }
-        .hiw-title span { color: #4A90E2; }
- 
-        .hiw-subtitle {
-          font-size: 15px;
-          color: rgba(255,255,255,0.38);
-          max-width: 420px;
-          margin: 0 auto;
-          line-height: 1.7;
-        }
- 
-        /* Step tabs */
-        .hiw-tabs {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-bottom: 52px;
-          flex-wrap: wrap;
-        }
- 
-        .hiw-tab {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 9px 20px;
-          border-radius: 12px;
-          border: 0.5px solid rgba(255,255,255,0.08);
-          background: transparent;
-          color: rgba(255,255,255,0.4);
-          font-family: 'DM Sans', sans-serif;
-          font-size: 13.5px;
-          font-weight: 400;
-          cursor: pointer;
-          transition: all 0.25s ease;
-        }
-        .hiw-tab:hover {
-          color: rgba(255,255,255,0.7);
-          border-color: rgba(255,255,255,0.15);
-          background: rgba(255,255,255,0.03);
-        }
-        .hiw-tab.active {
-          font-weight: 500;
-          color: white;
-          border-color: transparent;
-        }
- 
-        .hiw-tab-num {
-          width: 22px; height: 22px;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 11px;
-          font-weight: 600;
-          transition: all 0.25s;
-        }
- 
-        /* Main content */
-        .hiw-content {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 52px;
-          align-items: center;
-        }
- 
-        /* Left — big step display */
-        .hiw-left {
-          display: flex;
-          flex-direction: column;
-          gap: 28px;
-        }
- 
-        .step-number-display {
-          font-family: 'Syne', sans-serif;
-          font-size: 96px;
-          font-weight: 800;
-          line-height: 1;
-          letter-spacing: -4px;
-          transition: color 0.3s;
-          user-select: none;
-        }
- 
-        .step-icon-big {
-          width: 56px; height: 56px;
-          border-radius: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s;
-        }
-        .step-icon-big svg {
-          width: 26px; height: 26px;
-        }
- 
-        .step-title-big {
-          font-family: 'Syne', sans-serif;
-          font-size: clamp(26px, 3.5vw, 38px);
-          font-weight: 800;
-          color: white;
-          letter-spacing: -0.8px;
-          line-height: 1.15;
-        }
- 
-        .step-desc-big {
-          font-size: 15.5px;
-          color: rgba(255,255,255,0.45);
-          line-height: 1.75;
-          max-width: 400px;
-        }
- 
-        .step-tags {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-        .step-tags-label {
-          font-size: 11px;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: rgba(255,255,255,0.25);
-          margin-bottom: 6px;
-        }
-        .step-tags-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-        .step-tag {
-          font-size: 12.5px;
-          padding: 6px 14px;
-          border-radius: 999px;
-          border: 0.5px solid;
-          font-family: 'DM Sans', sans-serif;
-          transition: all 0.2s;
-          cursor: default;
-        }
-        .step-tag:hover { transform: translateY(-1px); }
- 
-        /* Nav arrows */
-        .step-nav {
-          display: flex;
-          gap: 10px;
-          margin-top: 4px;
-        }
-        .step-nav-btn {
-          width: 42px; height: 42px;
-          border-radius: 12px;
-          border: 0.5px solid rgba(255,255,255,0.1);
-          background: rgba(255,255,255,0.03);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s;
-          color: rgba(255,255,255,0.5);
-        }
-        .step-nav-btn svg {
-          width: 16px; height: 16px;
-          stroke: currentColor;
-          fill: none;
-          stroke-width: 2;
-        }
-        .step-nav-btn:hover {
-          border-color: rgba(255,255,255,0.2);
-          background: rgba(255,255,255,0.06);
-          color: white;
-        }
-        .step-nav-btn:disabled {
-          opacity: 0.2;
-          cursor: not-allowed;
-        }
- 
-        /* Right — stacked step cards */
-        .hiw-right {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
- 
-        .step-card {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 18px 20px;
-          border-radius: 16px;
-          border: 0.5px solid rgba(255,255,255,0.07);
-          background: rgba(255,255,255,0.025);
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-        }
- 
-        .step-card::before {
-          content: '';
-          position: absolute;
-          left: 0; top: 0; bottom: 0;
-          width: 3px;
-          border-radius: 0 2px 2px 0;
-          transition: opacity 0.3s;
-          opacity: 0;
-        }
- 
-        .step-card.active {
-          background: rgba(255,255,255,0.05);
-          border-color: rgba(255,255,255,0.12);
-        }
-        .step-card.active::before { opacity: 1; }
- 
-        .step-card:hover:not(.active) {
-          background: rgba(255,255,255,0.035);
-          border-color: rgba(255,255,255,0.1);
-          transform: translateX(3px);
-        }
- 
-        .card-num {
-          font-family: 'Syne', sans-serif;
-          font-size: 13px;
-          font-weight: 700;
-          min-width: 32px;
-          transition: color 0.3s;
-        }
- 
-        .card-icon {
-          width: 40px; height: 40px;
-          border-radius: 11px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          transition: all 0.3s;
-        }
-        .card-icon svg {
-          width: 18px; height: 18px;
-          transition: stroke 0.3s;
-        }
- 
-        .card-body { flex: 1; }
-        .card-title {
-          font-family: 'Syne', sans-serif;
-          font-size: 14.5px;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 2px;
-          transition: color 0.2s;
-        }
-        .card-desc {
-          font-size: 12.5px;
-          color: rgba(255,255,255,0.35);
-          line-height: 1.5;
-          transition: color 0.2s;
-        }
-        .step-card.active .card-desc { color: rgba(255,255,255,0.5); }
- 
-        .card-check {
-          width: 22px; height: 22px;
-          border-radius: 50%;
-          border: 1.5px solid rgba(255,255,255,0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          transition: all 0.3s;
-        }
-        .card-check svg {
-          width: 11px; height: 11px;
-          stroke: rgba(255,255,255,0.25);
-          fill: none;
-          stroke-width: 2.5;
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
-        .step-card.active .card-check svg { opacity: 1; }
- 
-        /* Progress dots */
-        .hiw-progress {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 48px;
-        }
-        .progress-dot {
-          height: 4px;
-          border-radius: 2px;
-          transition: all 0.35s ease;
-          cursor: pointer;
-        }
- 
-        /* bottom CTA */
-        .hiw-cta {
-          text-align: center;
-          margin-top: 56px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 16px;
-        }
-        .hiw-cta-text {
-          font-size: 14px;
-          color: rgba(255,255,255,0.35);
-        }
-        .hiw-cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: #FF6B35;
-          color: white;
-          border: none;
-          padding: 13px 28px;
-          border-radius: 12px;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 15px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.25s;
-          letter-spacing: 0.01em;
-        }
-        .hiw-cta-btn:hover {
-          background: #FF8C5A;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 28px rgba(255,107,53,0.4);
-        }
-        .hiw-cta-btn svg {
-          width: 16px; height: 16px;
-          stroke: white;
-          fill: none;
-          stroke-width: 2;
-        }
-        .hiw-cta-note {
-          font-size: 12px;
-          color: rgba(255,255,255,0.2);
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
-        .hiw-cta-note::before {
-          content: '✓';
-          color: #10B981;
-          font-size: 11px;
-        }
- 
-        @media (max-width: 900px) {
-          .hiw-content {
-            grid-template-columns: 1fr;
-            gap: 40px;
-          }
-          .step-number-display { font-size: 64px; }
-          .hiw-left { order: 2; }
-          .hiw-right { order: 1; }
-        }
- 
-        @media (max-width: 540px) {
-          .hiw-tabs { gap: 6px; }
-          .hiw-tab { padding: 8px 14px; font-size: 12.5px; }
-          .hiw-tab span:last-child { display: none; }
-        }
+
+.hiw-root {
+  background: #060D25;
+  padding: 100px 0 90px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.hiw-root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.35), transparent);
+}
+
+.hiw-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(120px);
+}
+
+.hiw-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.1) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+}
+
+.hiw-blob-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.08) 0%, transparent 70%);
+  bottom: -80px;
+  right: -80px;
+}
+
+.hiw-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header */
+.hiw-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.hiw-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.hiw-eyebrow-line {
+  width: 24px;
+  height: 2px;
+  background: #4A90E2;
+  border-radius: 2px;
+}
+
+.hiw-eyebrow-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4A90E2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hiw-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -1.2px;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.hiw-title span {
+  color: #4A90E2;
+}
+
+.hiw-subtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.38);
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Step tabs */
+.hiw-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 52px;
+  flex-wrap: wrap;
+}
+
+.hiw-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hiw-tab:hover {
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.hiw-tab.active {
+  font-weight: 500;
+  color: white;
+  border-color: transparent;
+}
+
+.hiw-tab-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.25s;
+}
+
+/* Main content */
+.hiw-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: center;
+}
+
+/* Left — big step display */
+.hiw-left {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.step-number-display {
+  font-family: 'Syne', sans-serif;
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -4px;
+  transition: color 0.3s;
+  user-select: none;
+}
+
+.step-icon-big {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.step-icon-big svg {
+  width: 26px;
+  height: 26px;
+}
+
+.step-title-big {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+.step-desc-big {
+  font-size: 15.5px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.75;
+  max-width: 400px;
+}
+
+.step-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step-tags-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 6px;
+}
+
+.step-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.step-tag {
+  font-size: 12.5px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 0.5px solid;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.step-tag:hover {
+  transform: translateY(-1px);
+}
+
+/* Nav arrows */
+.step-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.step-nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.step-nav-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.step-nav-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.step-nav-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* Right — stacked step cards */
+.hiw-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.step-card.active {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.step-card.active::before {
+  opacity: 1;
+}
+
+.step-card:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(3px);
+}
+
+.card-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 32px;
+  transition: color 0.3s;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.card-icon svg {
+  width: 18px;
+  height: 18px;
+  transition: stroke 0.3s;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.card-desc {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.5;
+  transition: color 0.2s;
+}
+
+.step-card.active .card-desc {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.card-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.card-check svg {
+  width: 11px;
+  height: 11px;
+  stroke: rgba(255, 255, 255, 0.25);
+  fill: none;
+  stroke-width: 2.5;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.step-card.active .card-check svg {
+  opacity: 1;
+}
+
+/* Progress dots */
+.hiw-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 48px;
+}
+
+.progress-dot {
+  height: 4px;
+  border-radius: 2px;
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+/* bottom CTA */
+.hiw-cta {
+  text-align: center;
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.hiw-cta-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.hiw-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FF6B35;
+  color: white;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.01em;
+}
+
+.hiw-cta-btn:hover {
+  background: #FF8C5A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255, 107, 53, 0.4);
+}
+
+.hiw-cta-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: white;
+  fill: none;
+  stroke-width: 2;
+}
+
+.hiw-cta-note {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hiw-cta-note::before {
+  content: '✓';
+  color: #10B981;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .hiw-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .step-number-display {
+    font-size: 64px;
+  }
+
+  .hiw-left {
+    order: 2;
+  }
+
+  .hiw-right {
+    order: 1;
+  }
+}
+
+@media (max-width: 540px) {
+  .hiw-tabs {
+    gap: 6px;
+  }
+
+  .hiw-tab {
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
+
+  .hiw-tab span:last-child {
+    display: none;
+  }
+}

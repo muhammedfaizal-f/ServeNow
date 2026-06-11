@@ -41,10 +41,10 @@ const reviewSchema = new mongoose.Schema(
 
     // ── Sub-ratings (optional granular feedback) ──────────────────────────────
     subRatings: {
-      punctuality:    { type: Number, min: 1, max: 5 },
-      quality:        { type: Number, min: 1, max: 5 },
-      communication:  { type: Number, min: 1, max: 5 },
-      value:          { type: Number, min: 1, max: 5 },
+      punctuality: { type: Number, min: 1, max: 5 },
+      quality: { type: Number, min: 1, max: 5 },
+      communication: { type: Number, min: 1, max: 5 },
+      value: { type: Number, min: 1, max: 5 },
     },
 
     // ── Helpful votes ─────────────────────────────────────────────────────────
@@ -95,7 +95,7 @@ reviewSchema.post("save", async function () {
     {
       $group: {
         _id: "$provider",
-        avgRating:    { $avg: "$rating" },
+        avgRating: { $avg: "$rating" },
         totalReviews: { $sum: 1 },
       },
     },
@@ -104,7 +104,7 @@ reviewSchema.post("save", async function () {
   if (stats.length > 0) {
     await Provider.findByIdAndUpdate(this.provider, {
       averageRating: Math.round(stats[0].avgRating * 10) / 10,
-      totalReviews:  stats[0].totalReviews,
+      totalReviews: stats[0].totalReviews,
     });
   }
 });
@@ -119,7 +119,7 @@ reviewSchema.post("findOneAndDelete", async function (doc) {
     {
       $group: {
         _id: "$provider",
-        avgRating:    { $avg: "$rating" },
+        avgRating: { $avg: "$rating" },
         totalReviews: { $sum: 1 },
       },
     },
@@ -127,7 +127,7 @@ reviewSchema.post("findOneAndDelete", async function (doc) {
 
   await Provider.findByIdAndUpdate(doc.provider, {
     averageRating: stats.length > 0 ? Math.round(stats[0].avgRating * 10) / 10 : 0,
-    totalReviews:  stats.length > 0 ? stats[0].totalReviews : 0,
+    totalReviews: stats.length > 0 ? stats[0].totalReviews : 0,
   });
 });
 

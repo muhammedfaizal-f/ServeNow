@@ -8,8 +8,8 @@ const features = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <polyline points="9 12 11 14 15 10"/>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <polyline points="9 12 11 14 15 10" />
       </svg>
     ),
     title: "Verified Professionals",
@@ -21,8 +21,8 @@ const features = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" y1="1" x2="12" y2="23"/>
-        <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+        <line x1="12" y1="1" x2="12" y2="23" />
+        <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
       </svg>
     ),
     title: "Transparent Pricing",
@@ -34,8 +34,8 @@ const features = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <polyline points="12 6 12 12 16 14"/>
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
       </svg>
     ),
     title: "On-Time Guarantee",
@@ -47,9 +47,9 @@ const features = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="1 4 1 10 7 10"/>
-        <polyline points="23 20 23 14 17 14"/>
-        <path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/>
+        <polyline points="1 4 1 10 7 10" />
+        <polyline points="23 20 23 14 17 14" />
+        <path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15" />
       </svg>
     ),
     title: "Easy Rescheduling",
@@ -61,7 +61,7 @@ const features = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
       </svg>
     ),
     title: "24/7 Support",
@@ -73,7 +73,7 @@ const features = [
   {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
     title: "Ratings & Reviews",
@@ -83,28 +83,28 @@ const features = [
     statLabel: "Average Rating",
   },
 ];
- 
+
 const trustBadges = [
   { icon: "🔒", text: "SSL Secured Payments" },
   { icon: "📋", text: "Licensed & Insured" },
   { icon: "🇮🇳", text: "Made in India" },
   { icon: "♻️", text: "Eco-Friendly Practices" },
 ];
- 
+
 const WhyChooseUs = () => {
   const [hovered, setHovered] = useState(null);
 
 
   return (
-    
+
     <>
-    <section id="whychooseus" className="wcu-root">
+      <section id="whychooseus" className="wcu-root">
         <div className="wcu-blob wcu-blob-1" />
         <div className="wcu-blob wcu-blob-2" />
         <div className="wcu-bg-text">TRUST</div>
- 
+
         <div className="wcu-inner">
- 
+
           {/* Header */}
           <div className="wcu-header">
             <div>
@@ -128,7 +128,7 @@ const WhyChooseUs = () => {
               </div>
             </div>
           </div>
- 
+
           {/* Features Grid */}
           <div className="wcu-grid">
             {features.map((f, i) => (
@@ -155,7 +155,7 @@ const WhyChooseUs = () => {
                   transition: "opacity 0.4s",
                   pointerEvents: "none",
                 }} />
- 
+
                 <div className="feat-top">
                   <div
                     className="feat-icon"
@@ -177,23 +177,23 @@ const WhyChooseUs = () => {
                     <div className="feat-stat-label">{f.statLabel}</div>
                   </div>
                 </div>
- 
+
                 <div className="feat-body">
                   <div className="feat-title">{f.title}</div>
                   <div className="feat-desc">{f.desc}</div>
                 </div>
- 
+
                 <button
                   className="feat-link"
                   style={{ color: f.color }}
                 >
                   Learn more
-                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 </button>
               </div>
             ))}
           </div>
- 
+
           {/* Comparison strip */}
           <div className="wcu-compare">
             <div className="compare-col">
@@ -206,14 +206,14 @@ const WhyChooseUs = () => {
                 "Haggling over every job",
               ].map((t, i) => (
                 <div className="compare-row" key={i}>
-                  <svg viewBox="0 0 24 24" stroke="#F87171"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <svg viewBox="0 0 24 24" stroke="#F87171"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                   <span>{t}</span>
                 </div>
               ))}
             </div>
- 
+
             <div className="compare-vs">VS</div>
- 
+
             <div className="compare-col right">
               <div className="compare-heading good">✅ With ServeNow</div>
               {[
@@ -224,13 +224,13 @@ const WhyChooseUs = () => {
                 "Fixed transparent rates always",
               ].map((t, i) => (
                 <div className="compare-row" key={i}>
-                  <svg viewBox="0 0 24 24" stroke="#34D399"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg viewBox="0 0 24 24" stroke="#34D399"><polyline points="20 6 9 17 4 12" /></svg>
                   <span style={{ color: "rgba(255,255,255,0.55)" }}>{t}</span>
                 </div>
               ))}
             </div>
           </div>
- 
+
         </div>
       </section>
     </>

@@ -7,7 +7,7 @@ const validate = (req, res, next) => {
     return res.status(400).json({
       success: false,
       message: errors.array()[0].msg, // return first error only
-      errors:  errors.array(),
+      errors: errors.array(),
     });
   }
   next();

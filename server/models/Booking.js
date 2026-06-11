@@ -29,14 +29,14 @@ const bookingSchema = new mongoose.Schema(
 
     timeSlot: {
       start: { type: String, required: true }, // "10:00 AM"
-      end:   { type: String, required: true }, // "12:00 PM"
+      end: { type: String, required: true }, // "12:00 PM"
     },
 
     // ── Address for the job ───────────────────────────────────────────────────
     jobAddress: {
-      street:  { type: String, required: true },
-      city:    { type: String, required: true },
-      state:   { type: String, default: "Tamil Nadu" },
+      street: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, default: "Tamil Nadu" },
       pincode: { type: String, required: true },
     },
 
@@ -102,9 +102,9 @@ const bookingSchema = new mongoose.Schema(
     },
 
     // ── Timestamps for status changes ─────────────────────────────────────────
-    confirmedAt:   { type: Date },
-    completedAt:   { type: Date },
-    cancelledAt:   { type: Date },
+    confirmedAt: { type: Date },
+    completedAt: { type: Date },
+    cancelledAt: { type: Date },
   },
   {
     timestamps: true,
@@ -120,9 +120,9 @@ bookingSchema.index({ status: 1, bookingDate: 1 }); // admin dashboard
 // ── Auto-set timestamps on status changes ────────────────────────────────────
 bookingSchema.pre("save", function (next) {
   if (this.isModified("status")) {
-    if (this.status === "confirmed")   this.confirmedAt  = new Date();
-    if (this.status === "completed")   this.completedAt  = new Date();
-    if (this.status === "cancelled")   this.cancelledAt  = new Date();
+    if (this.status === "confirmed") this.confirmedAt = new Date();
+    if (this.status === "completed") this.completedAt = new Date();
+    if (this.status === "cancelled") this.cancelledAt = new Date();
   }
   next();
 });

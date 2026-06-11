@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './Service.css'
 
 
-  const categories = [
+const categories = [
   {
     icon: "🔧",
     title: "Plumbing",
@@ -113,20 +113,20 @@ import './Service.css'
     services: ["Daily Cook", "Tiffin", "Party Cook", "Diet Meals"],
   },
 ];
- 
+
 const filters = ["All", "Home", "Repair", "Personal", "Care"];
- 
+
 const ServiceCategories = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hoveredBtn, setHoveredBtn] = useState(null);
   return (
     <>
-    <section className="sc-root">
+      <section className="sc-root">
         <div className="sc-blob" />
- 
+
         <div className="sc-inner">
- 
+
           {/* Header */}
           <div className="sc-header">
             <div>
@@ -139,10 +139,10 @@ const ServiceCategories = () => {
             </div>
             <button className="sc-view-all">
               View all services
-              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </button>
           </div>
- 
+
           {/* Filters */}
           <div className="sc-filters">
             {filters.map((f, i) => (
@@ -155,7 +155,7 @@ const ServiceCategories = () => {
               </button>
             ))}
           </div>
- 
+
           {/* Grid */}
           <div className="sc-grid">
             {categories.map((cat, i) => (
@@ -182,7 +182,7 @@ const ServiceCategories = () => {
                     pointerEvents: "none",
                   }}
                 />
- 
+
                 <div className="cat-top">
                   <div
                     className="cat-icon-wrap"
@@ -191,15 +191,15 @@ const ServiceCategories = () => {
                     {cat.icon}
                   </div>
                   <div className="cat-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                   </div>
                 </div>
- 
+
                 <div>
                   <div className="cat-title">{cat.title}</div>
                   <div className="cat-desc">{cat.desc}</div>
                 </div>
- 
+
                 <div className="cat-tags">
                   {cat.services.map((s, j) => (
                     <span
@@ -215,7 +215,7 @@ const ServiceCategories = () => {
                     </span>
                   ))}
                 </div>
- 
+
                 <div className="cat-bottom">
                   <span className="cat-count">
                     <span className="cat-count-dot" />
@@ -234,7 +234,7 @@ const ServiceCategories = () => {
               </div>
             ))}
           </div>
- 
+
           {/* Bottom strip */}
           <div className="sc-bottom">
             <span className="sc-bottom-text">Can't find what you need?</span>
@@ -244,7 +244,7 @@ const ServiceCategories = () => {
               ))}
             </div>
           </div>
- 
+
         </div>
       </section>
     </>

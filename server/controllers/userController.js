@@ -30,9 +30,9 @@ const updateProfile = async (req, res) => {
     const { name, phone, avatar, address } = req.body;
 
     const updateFields = {};
-    if (name)    updateFields.name    = name.trim();
-    if (phone)   updateFields.phone   = phone.trim();
-    if (avatar)  updateFields.avatar  = avatar;
+    if (name) updateFields.name = name.trim();
+    if (phone) updateFields.phone = phone.trim();
+    if (avatar) updateFields.avatar = avatar;
     if (address) updateFields.address = address;
 
     if (Object.keys(updateFields).length === 0) {
@@ -91,9 +91,9 @@ const getMyBookings = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success:    true,
+      success: true,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       bookings,
     });
@@ -126,9 +126,9 @@ const toggleSaveProvider = async (req, res) => {
     await user.save();
 
     res.status(200).json({
-      success:    true,
-      message:    isSaved ? "Provider removed from saved." : "Provider saved.",
-      isSaved:    !isSaved,
+      success: true,
+      message: isSaved ? "Provider removed from saved." : "Provider saved.",
+      isSaved: !isSaved,
       savedCount: user.savedProviders.length,
     });
   } catch (error) {
@@ -150,8 +150,8 @@ const getSavedProviders = async (req, res) => {
     });
 
     res.status(200).json({
-      success:   true,
-      total:     user.savedProviders.length,
+      success: true,
+      total: user.savedProviders.length,
       providers: user.savedProviders,
     });
   } catch (error) {

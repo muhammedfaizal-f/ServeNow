@@ -261,29 +261,29 @@
       background: rgba(255, 255, 255, .06)
   }
 
- .fsel {
-  width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  background: #1B2345;
-  color: #fff;
-  border: 2px solid #FF6B35;
-  border-radius: 18px;
-  font-size: 16px;
-  outline: none;
-  cursor: pointer;
-}
+  .fsel {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      background: #1B2345;
+      color: #fff;
+      border: 2px solid #FF6B35;
+      border-radius: 18px;
+      font-size: 16px;
+      outline: none;
+      cursor: pointer;
+  }
 
-.fsel option {
-  background: #08112F;
-  color: #fff;
-  padding: 12px;
-}
+  .fsel option {
+      background: #08112F;
+      color: #fff;
+      padding: 12px;
+  }
 
-.fsel:focus {
-  border-color: #FF8C5A;
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
-}
+  .fsel:focus {
+      border-color: #FF8C5A;
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+  }
 
   .fta {
       resize: vertical;

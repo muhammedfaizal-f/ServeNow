@@ -1,5 +1,5 @@
 const express = require("express");
-const router  = express.Router();
+const router = express.Router();
 const Booking = require("../models/Booking");
 
 const {
@@ -54,15 +54,15 @@ router.get("/:id", getBookingById);
 //  pending|confirmed ──► rescheduled → back to pending (user)
 
 // Provider actions
-router.patch("/:id/confirm",     authorize("provider", "admin"), confirmBooking);
-router.patch("/:id/reject",      authorize("provider", "admin"), rejectBooking);
-router.patch("/:id/start",       authorize("provider", "admin"), startBooking);
-router.patch("/:id/complete",    authorize("provider", "admin"), completeBooking);
+router.patch("/:id/confirm", authorize("provider", "admin"), confirmBooking);
+router.patch("/:id/reject", authorize("provider", "admin"), rejectBooking);
+router.patch("/:id/start", authorize("provider", "admin"), startBooking);
+router.patch("/:id/complete", authorize("provider", "admin"), completeBooking);
 
 // Shared: user, provider, or admin can cancel
-router.patch("/:id/cancel",      cancelBooking);
+router.patch("/:id/cancel", cancelBooking);
 
 // User reschedules
-router.patch("/:id/reschedule",  authorize("user", "admin"), rescheduleBooking);
+router.patch("/:id/reschedule", authorize("user", "admin"), rescheduleBooking);
 
 module.exports = router;

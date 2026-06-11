@@ -42,10 +42,10 @@ const createBooking = async (req, res) => {
 
     // Check time slot conflict for this provider
     const conflict = await Booking.findOne({
-      provider:          providerId,
-      bookingDate:       new Date(bookingDate),
-      status:            { $in: ["pending", "confirmed", "in-progress"] },
-      "timeSlot.start":  timeSlot.start,
+      provider: providerId,
+      bookingDate: new Date(bookingDate),
+      status: { $in: ["pending", "confirmed", "in-progress"] },
+      "timeSlot.start": timeSlot.start,
     });
 
     if (conflict) {
@@ -60,16 +60,16 @@ const createBooking = async (req, res) => {
       service.pricingType === "fixed" ? service.price : provider.hourlyRate;
 
     const booking = await Booking.create({
-      user:          req.user._id,
-      provider:      providerId,
-      service:       serviceId,
-      bookingDate:   new Date(bookingDate),
+      user: req.user._id,
+      provider: providerId,
+      service: serviceId,
+      bookingDate: new Date(bookingDate),
       timeSlot,
       jobAddress,
       totalAmount,
       paymentMethod: paymentMethod || "cash",
-      userNotes:     userNotes || "",
-      status:        "pending",
+      userNotes: userNotes || "",
+      status: "pending",
     });
 
     // Increment service booking count
@@ -78,7 +78,7 @@ const createBooking = async (req, res) => {
     const populated = await Booking.findById(booking._id)
       .populate({ path: "provider", populate: { path: "user", select: "name avatar phone" } })
       .populate("service", "title category price")
-      .populate("user",    "name phone avatar");
+      .populate("user", "name phone avatar");
 
     res.status(201).json({
       success: true,
@@ -87,7 +87,7 @@ const createBooking = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    
+
     console.error("createBooking:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
@@ -103,16 +103,16 @@ const getBookingById = async (req, res) => {
     const booking = await Booking.findById(req.params.id)
       .populate({ path: "provider", populate: { path: "user", select: "name avatar phone" } })
       .populate("service", "title category price estimatedDuration")
-      .populate("user",    "name avatar phone email");
+      .populate("user", "name avatar phone email");
 
     if (!booking) {
       return res.status(404).json({ success: false, message: "Booking not found." });
     }
 
     const providerUserId = booking.provider?.user?._id?.toString();
-    const isOwner    = booking.user._id.toString() === req.user._id.toString();
-    const isProvider = providerUserId             === req.user._id.toString();
-    const isAdmin    = req.user.role              === "admin";
+    const isOwner = booking.user._id.toString() === req.user._id.toString();
+    const isProvider = providerUserId === req.user._id.toString();
+    const isAdmin = req.user.role === "admin";
 
     if (!isOwner && !isProvider && !isAdmin) {
       return res.status(403).json({ success: false, message: "Access denied." });
@@ -144,7 +144,7 @@ const getProviderBookings = async (req, res) => {
 
     if (date) {
       const start = new Date(date); start.setHours(0, 0, 0, 0);
-      const end   = new Date(date); end.setHours(23, 59, 59, 999);
+      const end = new Date(date); end.setHours(23, 59, 59, 999);
       filter.bookingDate = { $gte: start, $lte: end };
     }
 
@@ -152,7 +152,7 @@ const getProviderBookings = async (req, res) => {
 
     const [bookings, total] = await Promise.all([
       Booking.find(filter)
-        .populate("user",    "name avatar phone")
+        .populate("user", "name avatar phone")
         .populate("service", "title category price")
         .sort({ bookingDate: 1 })
         .skip(skip)
@@ -161,9 +161,9 @@ const getProviderBookings = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success:    true,
+      success: true,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       bookings,
     });
@@ -180,7 +180,7 @@ const getProviderBookings = async (req, res) => {
 // ────────────────────────────────────────────────────────────────────────────
 const confirmBooking = async (req, res) => {
   try {
-    const booking  = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: "Booking not found." });
 
     const provider = await Provider.findOne({ user: req.user._id });
@@ -195,7 +195,7 @@ const confirmBooking = async (req, res) => {
       });
     }
 
-    booking.status      = "confirmed";
+    booking.status = "confirmed";
     booking.confirmedAt = new Date();
     await booking.save();
 
@@ -213,7 +213,7 @@ const confirmBooking = async (req, res) => {
 // ────────────────────────────────────────────────────────────────────────────
 const rejectBooking = async (req, res) => {
   try {
-    const booking  = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: "Booking not found." });
 
     const provider = await Provider.findOne({ user: req.user._id });
@@ -225,8 +225,8 @@ const rejectBooking = async (req, res) => {
       return res.status(400).json({ success: false, message: "Only pending bookings can be rejected." });
     }
 
-    booking.status             = "rejected";
-    booking.cancelledBy        = "provider";
+    booking.status = "rejected";
+    booking.cancelledBy = "provider";
     booking.cancellationReason = req.body.reason || "Provider unavailable";
     await booking.save();
 
@@ -244,7 +244,7 @@ const rejectBooking = async (req, res) => {
 // ────────────────────────────────────────────────────────────────────────────
 const startBooking = async (req, res) => {
   try {
-    const booking  = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: "Booking not found." });
 
     const provider = await Provider.findOne({ user: req.user._id });
@@ -273,7 +273,7 @@ const startBooking = async (req, res) => {
 // ────────────────────────────────────────────────────────────────────────────
 const completeBooking = async (req, res) => {
   try {
-    const booking  = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: "Booking not found." });
 
     const provider = await Provider.findOne({ user: req.user._id });
@@ -285,7 +285,7 @@ const completeBooking = async (req, res) => {
       return res.status(400).json({ success: false, message: "Only in-progress bookings can be completed." });
     }
 
-    booking.status      = "completed";
+    booking.status = "completed";
     booking.completedAt = new Date();
     await booking.save();
 
@@ -313,10 +313,10 @@ const cancelBooking = async (req, res) => {
     const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ success: false, message: "Booking not found." });
 
-    const isUser     = booking.user.toString() === req.user._id.toString();
-    const provider   = await Provider.findOne({ user: req.user._id });
+    const isUser = booking.user.toString() === req.user._id.toString();
+    const provider = await Provider.findOne({ user: req.user._id });
     const isProvider = provider && booking.provider.toString() === provider._id.toString();
-    const isAdmin    = req.user.role === "admin";
+    const isAdmin = req.user.role === "admin";
 
     if (!isUser && !isProvider && !isAdmin) {
       return res.status(403).json({ success: false, message: "Access denied." });
@@ -340,9 +340,9 @@ const cancelBooking = async (req, res) => {
       }
     }
 
-    booking.status             = "cancelled";
-    booking.cancelledAt        = new Date();
-    booking.cancelledBy        = isAdmin ? "admin" : isProvider ? "provider" : "user";
+    booking.status = "cancelled";
+    booking.cancelledAt = new Date();
+    booking.cancelledBy = isAdmin ? "admin" : isProvider ? "provider" : "user";
     booking.cancellationReason = req.body.reason || "";
     await booking.save();
 
@@ -385,10 +385,10 @@ const rescheduleBooking = async (req, res) => {
 
     // Check new slot conflict
     const conflict = await Booking.findOne({
-      _id:              { $ne: booking._id },
-      provider:         booking.provider,
-      bookingDate:      new Date(bookingDate),
-      status:           { $in: ["pending", "confirmed", "in-progress"] },
+      _id: { $ne: booking._id },
+      provider: booking.provider,
+      bookingDate: new Date(bookingDate),
+      status: { $in: ["pending", "confirmed", "in-progress"] },
       "timeSlot.start": timeSlot.start,
     });
 
@@ -400,8 +400,8 @@ const rescheduleBooking = async (req, res) => {
     }
 
     booking.bookingDate = new Date(bookingDate);
-    booking.timeSlot    = timeSlot;
-    booking.status      = "pending"; // reset — provider must re-confirm
+    booking.timeSlot = timeSlot;
+    booking.status = "pending"; // reset — provider must re-confirm
     await booking.save();
 
     res.status(200).json({

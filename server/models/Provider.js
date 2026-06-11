@@ -63,8 +63,8 @@ const providerSchema = new mongoose.Schema(
     // ── Location ──────────────────────────────────────────────────────────────
     location: {
       address: { type: String, default: "" },
-      city:    { type: String, default: "Coimbatore" },
-      state:   { type: String, default: "Tamil Nadu" },
+      city: { type: String, default: "Coimbatore" },
+      state: { type: String, default: "Tamil Nadu" },
       pincode: { type: String, default: "" },
       // GeoJSON for map-based queries
       coordinates: {
@@ -94,7 +94,7 @@ const providerSchema = new mongoose.Schema(
 
     workingHours: {
       start: { type: String, default: "08:00" }, // "08:00"
-      end:   { type: String, default: "20:00" }, // "20:00"
+      end: { type: String, default: "20:00" }, // "20:00"
     },
 
     // ── Ratings ───────────────────────────────────────────────────────────────

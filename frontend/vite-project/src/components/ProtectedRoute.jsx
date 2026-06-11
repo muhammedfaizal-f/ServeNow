@@ -18,9 +18,9 @@ export default function ProtectedRoute({ children, role }) {
   if (loading) {
     return (
       <div style={{
-        minHeight:"100vh", background:"#080F2A",
-        display:"flex", alignItems:"center", justifyContent:"center",
-        color:"rgba(255,255,255,.4)", fontFamily:"DM Sans, sans-serif",
+        minHeight: "100vh", background: "#080F2A",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        color: "rgba(255,255,255,.4)", fontFamily: "DM Sans, sans-serif",
       }}>
         Loading…
       </div>

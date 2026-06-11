@@ -67,20 +67,20 @@ export function AuthProvider({ children }) {
   const isAdmin = user?.role === "admin";
 
   return (
-   <AuthContext.Provider
-  value={{
-    user,
-    loading,
-    isLoggedIn,
-    isProvider,
-    isAdmin,
-    login,
-    register,
-    googleLogin,
-    logout,
-    updateUser,
-  }}
->
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        isLoggedIn,
+        isProvider,
+        isAdmin,
+        login,
+        register,
+        googleLogin,
+        logout,
+        updateUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -14,15 +14,15 @@ const getAllServices = async (req, res) => {
       minPrice,
       maxPrice,
       search,
-      sort    = "popular",
-      page    = 1,
-      limit   = 12,
+      sort = "popular",
+      page = 1,
+      limit = 12,
     } = req.query;
 
     // ── Build filter ──────────────────────────────────────────────────────────
     const filter = { isActive: true };
 
-    if (category)    filter.category    = category;
+    if (category) filter.category = category;
     if (subCategory) filter.subCategory = subCategory;
     if (pricingType) filter.pricingType = pricingType;
 
@@ -39,10 +39,10 @@ const getAllServices = async (req, res) => {
 
     // ── Sort options ──────────────────────────────────────────────────────────
     const sortOptions = {
-      popular:   { bookingCount: -1 },
-      priceLow:  { price: 1 },
+      popular: { bookingCount: -1 },
+      priceLow: { price: 1 },
       priceHigh: { price: -1 },
-      newest:    { createdAt: -1 },
+      newest: { createdAt: -1 },
     };
     const sortBy = search
       ? { score: { $meta: "textScore" } }   // rank by text relevance if searching
@@ -67,9 +67,9 @@ const getAllServices = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success:    true,
+      success: true,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       services,
     });
@@ -90,10 +90,10 @@ const getCategories = async (req, res) => {
       { $match: { isActive: true } },
       {
         $group: {
-          _id:          "$category",
+          _id: "$category",
           serviceCount: { $sum: 1 },
-          avgPrice:     { $avg: "$price" },
-          totalBookings:{ $sum: "$bookingCount" },
+          avgPrice: { $avg: "$price" },
+          totalBookings: { $sum: "$bookingCount" },
         },
       },
       { $sort: { totalBookings: -1 } },
@@ -101,31 +101,31 @@ const getCategories = async (req, res) => {
 
     // Attach icon and description metadata
     const categoryMeta = {
-      "Plumbing":      { icon: "🔧", desc: "Pipe repairs, leaks & installations" },
-      "Electrician":   { icon: "⚡", desc: "Wiring, fuse box & fan fitting" },
+      "Plumbing": { icon: "🔧", desc: "Pipe repairs, leaks & installations" },
+      "Electrician": { icon: "⚡", desc: "Wiring, fuse box & fan fitting" },
       "Home Cleaning": { icon: "🧹", desc: "Deep clean & regular maintenance" },
-      "Painting":      { icon: "🎨", desc: "Interior & exterior wall painting" },
-      "AC Repair":     { icon: "❄️", desc: "Service, gas refill & cleaning" },
-      "Carpentry":     { icon: "🛠", desc: "Furniture fix & custom shelves" },
-      "Tutoring":      { icon: "📚", desc: "Home tutor for all subjects" },
-      "Pet Care":      { icon: "🐾", desc: "Dog walking & grooming" },
-      "Gardening":     { icon: "🪴", desc: "Lawn care & plant trimming" },
-      "Moving Help":   { icon: "📦", desc: "Packing, loading & delivery" },
-      "Locksmith":     { icon: "🔑", desc: "Lock repair & key cutting" },
-      "Home Cook":     { icon: "🍳", desc: "Daily cooking & event catering" },
+      "Painting": { icon: "🎨", desc: "Interior & exterior wall painting" },
+      "AC Repair": { icon: "❄️", desc: "Service, gas refill & cleaning" },
+      "Carpentry": { icon: "🛠", desc: "Furniture fix & custom shelves" },
+      "Tutoring": { icon: "📚", desc: "Home tutor for all subjects" },
+      "Pet Care": { icon: "🐾", desc: "Dog walking & grooming" },
+      "Gardening": { icon: "🪴", desc: "Lawn care & plant trimming" },
+      "Moving Help": { icon: "📦", desc: "Packing, loading & delivery" },
+      "Locksmith": { icon: "🔑", desc: "Lock repair & key cutting" },
+      "Home Cook": { icon: "🍳", desc: "Daily cooking & event catering" },
     };
 
     const enriched = categories.map((cat) => ({
-      category:     cat._id,
+      category: cat._id,
       serviceCount: cat.serviceCount,
-      avgPrice:     Math.round(cat.avgPrice),
-      totalBookings:cat.totalBookings,
+      avgPrice: Math.round(cat.avgPrice),
+      totalBookings: cat.totalBookings,
       ...(categoryMeta[cat._id] || {}),
     }));
 
     res.status(200).json({
-      success:    true,
-      total:      enriched.length,
+      success: true,
+      total: enriched.length,
       categories: enriched,
     });
   } catch (error) {
@@ -145,10 +145,10 @@ const getServicesByCategory = async (req, res) => {
     const { page = 1, limit = 12, sort = "popular" } = req.query;
 
     const sortOptions = {
-      popular:   { bookingCount: -1 },
-      priceLow:  { price: 1 },
+      popular: { bookingCount: -1 },
+      priceLow: { price: 1 },
       priceHigh: { price: -1 },
-      newest:    { createdAt: -1 },
+      newest: { createdAt: -1 },
     };
 
     const skip = (Number(page) - 1) * Number(limit);
@@ -174,10 +174,10 @@ const getServicesByCategory = async (req, res) => {
     }
 
     res.status(200).json({
-      success:    true,
+      success: true,
       category,
       total,
-      page:       Number(page),
+      page: Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       services,
     });
@@ -206,7 +206,7 @@ const getServiceById = async (req, res) => {
 
     // Get related services from same category (excluding this one)
     const related = await Service.find({
-      _id:      { $ne: service._id },
+      _id: { $ne: service._id },
       category: service.category,
       isActive: true,
     })
@@ -264,16 +264,16 @@ const createService = async (req, res) => {
     }
 
     const service = await Service.create({
-      provider:         provider._id,
+      provider: provider._id,
       title,
       description,
       category,
-      subCategory:      subCategory || "",
-      pricingType:      pricingType || "hourly",
+      subCategory: subCategory || "",
+      pricingType: pricingType || "hourly",
       price,
-      estimatedDuration:estimatedDuration || 60,
-      images:           images || [],
-      tags:             tags || [],
+      estimatedDuration: estimatedDuration || 60,
+      images: images || [],
+      tags: tags || [],
     });
 
     res.status(201).json({
@@ -320,15 +320,15 @@ const updateService = async (req, res) => {
     } = req.body;
 
     const updateFields = {};
-    if (title             !== undefined) updateFields.title             = title;
-    if (description       !== undefined) updateFields.description       = description;
-    if (subCategory       !== undefined) updateFields.subCategory       = subCategory;
-    if (pricingType       !== undefined) updateFields.pricingType       = pricingType;
-    if (price             !== undefined) updateFields.price             = price;
+    if (title !== undefined) updateFields.title = title;
+    if (description !== undefined) updateFields.description = description;
+    if (subCategory !== undefined) updateFields.subCategory = subCategory;
+    if (pricingType !== undefined) updateFields.pricingType = pricingType;
+    if (price !== undefined) updateFields.price = price;
     if (estimatedDuration !== undefined) updateFields.estimatedDuration = estimatedDuration;
-    if (images            !== undefined) updateFields.images            = images;
-    if (tags              !== undefined) updateFields.tags              = tags;
-    if (isActive          !== undefined) updateFields.isActive          = isActive;
+    if (images !== undefined) updateFields.images = images;
+    if (tags !== undefined) updateFields.tags = tags;
+    if (isActive !== undefined) updateFields.isActive = isActive;
 
     const updated = await Service.findByIdAndUpdate(
       req.params.id,
@@ -354,7 +354,7 @@ const updateService = async (req, res) => {
 // ────────────────────────────────────────────────────────────────────────────
 const deleteService = async (req, res) => {
   try {
-    const service  = await Service.findById(req.params.id);
+    const service = await Service.findById(req.params.id);
     if (!service) return res.status(404).json({ success: false, message: "Service not found." });
 
     const provider = await Provider.findOne({ user: req.user._id });
@@ -389,8 +389,8 @@ const getMyServices = async (req, res) => {
       .sort({ createdAt: -1 });
 
     res.status(200).json({
-      success:  true,
-      total:    services.length,
+      success: true,
+      total: services.length,
       services,
     });
   } catch (error) {

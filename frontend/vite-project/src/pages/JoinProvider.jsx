@@ -180,7 +180,7 @@ export default function JoinProvider() {
                   <div className="f"><label className="fl">Full Name</label><input className="fi" placeholder="Muhammed Faizal F" value={form.name} onChange={e => u("name", e.target.value)} /></div>
                   <div className="f"><label className="fl">Phone</label><input className="fi" placeholder="9876543210" value={form.phone} onChange={e => u("phone", e.target.value)} /></div>
                 </div>
-                 <div className="f"><label className="fl">Email Address</label><input className="fi" type="email" placeholder="you@example.com" value={form.email} onChange={e=>u("email",e.target.value)}/></div>
+                <div className="f"><label className="fl">Email Address</label><input className="fi" type="email" placeholder="you@example.com" value={form.email} onChange={e => u("email", e.target.value)} /></div>
                 <div className="f">
                   <label className="fl">Password (min 6 chars)</label>
 
@@ -265,7 +265,7 @@ export default function JoinProvider() {
                 <div className="frow" style={{ marginBottom: 0 }}>
                   <div className="f" style={{ marginBottom: 0 }}><label className="fl">City</label>
                     <select className="fsel" value={form.city} onChange={e => u("city", e.target.value)}>
-                      {["Coimbatore", "Chennai", "Madurai", "Trichy", "Salem", "Erode", "Tiruppur", "Vellore" ].map(c => <option key={c}>{c}</option>)}
+                      {["Coimbatore", "Chennai", "Madurai", "Trichy", "Salem", "Erode", "Tiruppur", "Vellore"].map(c => <option key={c}>{c}</option>)}
                     </select>
                   </div>
                   <div className="f" style={{ marginBottom: 0 }}><label className="fl">Pincode</label><input className="fi" placeholder="641001" value={form.pincode} onChange={e => u("pincode", e.target.value)} /></div>

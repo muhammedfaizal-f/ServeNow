@@ -1,5 +1,5 @@
 const express = require("express");
-const router  = express.Router();
+const router = express.Router();
 
 const {
   getProfile,
@@ -16,18 +16,18 @@ const { protect } = require("../middleware/authMiddleware");
 router.use(protect);
 
 // ── Profile ───────────────────────────────────────────────────────────────────
-router.get("/profile",    getProfile);
-router.put("/profile",    updateProfile);
+router.get("/profile", getProfile);
+router.put("/profile", updateProfile);
 
 // ── Bookings ──────────────────────────────────────────────────────────────────
 // GET /api/users/bookings?status=pending&page=1&limit=10
-router.get("/bookings",   getMyBookings);
+router.get("/bookings", getMyBookings);
 
 // ── Saved providers ───────────────────────────────────────────────────────────
-router.get("/saved",                       getSavedProviders);
-router.post("/saved/:providerId",          toggleSaveProvider);
+router.get("/saved", getSavedProviders);
+router.post("/saved/:providerId", toggleSaveProvider);
 
 // ── Account ───────────────────────────────────────────────────────────────────
-router.delete("/account",  deactivateAccount);
+router.delete("/account", deactivateAccount);
 
 module.exports = router;

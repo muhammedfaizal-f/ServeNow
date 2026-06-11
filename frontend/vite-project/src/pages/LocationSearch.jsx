@@ -43,11 +43,11 @@ export default function LocationSearch() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
- const [query, setQuery] = useState(
-  searchParams.get("search") ||
-  searchParams.get("q") ||
-  ""
-);
+  const [query, setQuery] = useState(
+    searchParams.get("search") ||
+    searchParams.get("q") ||
+    ""
+  );
   const [city, setCity] = useState(searchParams.get("city") || "Coimbatore");
   const [category, setCategory] = useState(searchParams.get("category") || "");
   const [results, setResults] = useState([]);
@@ -146,15 +146,15 @@ export default function LocationSearch() {
     [query, city, category, sort, avail, setSearchParams]
   );
 
- useEffect(() => {
-  if (
-    searchParams.get("search") ||
-    searchParams.get("q") ||
-    searchParams.get("category")
-  ) {
-    doSearch();
-  }
-}, []);
+  useEffect(() => {
+    if (
+      searchParams.get("search") ||
+      searchParams.get("q") ||
+      searchParams.get("category")
+    ) {
+      doSearch();
+    }
+  }, []);
 
   const handleBook = (id) => {
     setBooked(id);

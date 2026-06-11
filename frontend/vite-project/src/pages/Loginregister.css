@@ -524,143 +524,142 @@ body {
     animation: spin .7s linear infinite
 }
 
-.social-auth{
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+.social-auth {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 /* GOOGLE BUTTON */
 
-.google-btn{
-  width: 100%;
-  height: 55px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: #101935;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
+.google-btn {
+    width: 100%;
+    height: 55px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #101935;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 
-  transition: 0.3s;
+    transition: 0.3s;
 }
 
-.google-btn img{
-  width: 22px;
-  height: 22px;
+.google-btn img {
+    width: 22px;
+    height: 22px;
 }
 
-.google-btn:hover{
-  background: #ff6b35;
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(255,107,53,0.35);
+.google-btn:hover {
+    background: #ff6b35;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.35);
 }
 
 /* OTP BOX */
 
-.otp-box{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.otp-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.otp-box input{
-  width: 100%;
-  height: 48px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: #101935;
-  color: white;
-  padding: 0 15px;
-  font-size: 15px;
-  outline: none;
+.otp-box input {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #101935;
+    color: white;
+    padding: 0 15px;
+    font-size: 15px;
+    outline: none;
 }
 
-.otp-box input::placeholder{
-  color: #8d93ab;
+.otp-box input::placeholder {
+    color: #8d93ab;
 }
 
-.otp-box button{
-  width: 100%;
-  height: 48px;
-  border: none;
-  border-radius: 12px;
+.otp-box button {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
 
-  background: linear-gradient(
-    90deg,
-    #ff6b35,
-    #ff824d
-  );
+    background: linear-gradient(90deg,
+            #ff6b35,
+            #ff824d);
 
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
 
-  transition: 0.3s;
+    transition: 0.3s;
 }
 
-.otp-box button:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(255,107,53,0.35);
+.otp-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.35);
 }
 
-.phone-btn{
-  width:100%;
-  height:55px;
-  border:none;
-  border-radius:14px;
-  cursor:pointer;
+.phone-btn {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
 
-  background:#101935;
-  color:white;
+    background: #101935;
+    color: white;
 
-  font-size:16px;
-  font-weight:600;
+    font-size: 16px;
+    font-weight: 600;
 
-  transition:.3s;
+    transition: .3s;
 }
 
-.phone-btn:hover{
-  background:#ff6b35;
-  transform:translateY(-2px);
+.phone-btn:hover {
+    background: #ff6b35;
+    transform: translateY(-2px);
 }
 
-.otp-box{
-  overflow:hidden;
-  animation:slideDown .4s ease;
+.otp-box {
+    overflow: hidden;
+    animation: slideDown .4s ease;
 }
+
 .password-wrapper {
-  position: relative;
+    position: relative;
 }
 
 .password-toggle {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 18px;
-  z-index: 10;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 10;
 }
 
-@keyframes slideDown{
-  from{
-    opacity:0;
-    transform:translateY(-15px);
-  }
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
 
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes pulse {
