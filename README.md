@@ -118,7 +118,7 @@ The backend exposes **35+ RESTful endpoints** across 6 resource groups:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ServeNow.git
+git clone https://github.com/muhammedfaizal-f/ServeNow.git
 cd ServeNow
 ```
 
