@@ -1164,3 +1164,173 @@ body {
     }
 
 }
+
+/* ================= MOBILE PROFILE ================= */
+@media (max-width: 480px) {
+
+  .up-nav {
+    padding: 0 12px;
+    gap: 8px;
+    height: 58px;
+    overflow: hidden;
+  }
+
+  .up-logo {
+    font-size: 15px;
+  }
+
+  .nav-div,
+  .up-nav-title {
+    display: none;
+  }
+
+  .up-back {
+    font-size: 12px;
+    margin-left: auto;
+  }
+
+  .up-logout {
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+
+  .up-logout svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .up-hero {
+    padding: 24px 16px 0;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .avatar-ring {
+    width: 90px;
+    height: 90px;
+  }
+
+  .hero-name {
+    font-size: 30px;
+    line-height: 1.1;
+    word-break: break-word;
+  }
+
+  .hero-email {
+    font-size: 13px;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+
+  .hero-tags {
+    justify-content: center;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .hero-stats {
+    flex-wrap: wrap;
+    border-radius: 14px;
+  }
+
+  .hs-item {
+    flex: 0 0 50%;
+    padding: 14px 8px;
+  }
+
+  .hs-val {
+    font-size: 18px;
+  }
+
+  .hs-lbl {
+    font-size: 10px;
+  }
+
+  .up-tabs {
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .up-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .up-tab {
+    padding: 14px 16px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .up-content {
+    padding: 20px 14px 40px;
+  }
+
+  .stat-card,
+  .set-card,
+  .act-card,
+  .how-card {
+    padding: 16px;
+  }
+
+  .bk-card,
+  .tx-row {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .bk-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .set-danger {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .set-danger-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .avatar-wrap {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0;
+  }
+
+  .hero-name,
+  .hero-email,
+  .hero-tags {
+    justify-content: center;
+    text-align: center;
+  }
+}

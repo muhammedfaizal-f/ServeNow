@@ -455,3 +455,173 @@
      grid-column: span 1;
    }
  }
+
+ /* Mobile Responsive */
+ @media (max-width: 480px) {
+   .ft-newsletter {
+     padding: 35px 0;
+   }
+
+   .ft-newsletter-inner,
+   .ft-body,
+   .ft-cities,
+   .ft-bottom-inner {
+     padding-left: 16px;
+     padding-right: 16px;
+   }
+
+   /* Newsletter */
+   .ft-nl-left {
+     width: 100%;
+   }
+
+   .ft-nl-title {
+     font-size: 20px;
+   }
+
+   .ft-nl-sub {
+     font-size: 13px;
+     line-height: 1.6;
+   }
+
+   .ft-nl-form {
+     width: 100%;
+     flex-direction: column;
+   }
+
+   .ft-nl-input,
+   .ft-nl-btn {
+     width: 100%;
+   }
+
+   .ft-nl-btn {
+     justify-content: center;
+   }
+
+   /* Footer body */
+   .ft-body {
+     grid-template-columns: 1fr;
+     gap: 30px;
+     padding-top: 40px;
+     padding-bottom: 30px;
+   }
+
+   .ft-brand {
+     grid-column: span 1;
+   }
+
+   /* Logo */
+   .ft-logo-text {
+     font-size: 18px;
+   }
+
+   .ft-tagline {
+     max-width: 100%;
+     font-size: 13px;
+     line-height: 1.8;
+   }
+
+   /* Social icons */
+   .ft-socials {
+     flex-wrap: wrap;
+   }
+
+   .ft-social-btn {
+     width: 42px;
+     height: 42px;
+   }
+
+   /* Contact */
+   .ft-contact-row {
+     font-size: 13px;
+     word-break: break-word;
+   }
+
+   /* Columns */
+   .ft-col {
+     gap: 12px;
+   }
+
+   .ft-col-heading {
+     font-size: 18px;
+   }
+
+   .ft-link {
+     font-size: 14px;
+   }
+
+   /* Cities */
+   .ft-cities-row {
+     gap: 10px;
+   }
+
+   .ft-city-chip {
+     font-size: 11px;
+     padding: 6px 12px;
+   }
+
+   /* Bottom */
+   .ft-bottom-inner {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 14px;
+   }
+
+   .ft-bottom-links {
+     gap: 12px;
+   }
+
+   .ft-bottom-link {
+     font-size: 11px;
+   }
+
+   .ft-copy,
+   .ft-made {
+     font-size: 11px;
+   }
+ }
+
+ @media (max-width: 360px) {
+
+   .ft-newsletter-inner,
+   .ft-body,
+   .ft-cities,
+   .ft-bottom-inner {
+     padding-left: 12px;
+     padding-right: 12px;
+   }
+
+   .ft-logo-text {
+     font-size: 16px;
+   }
+
+   .ft-nl-title {
+     font-size: 18px;
+   }
+
+   .ft-tagline {
+     font-size: 12px;
+   }
+
+   .ft-contact-row {
+     font-size: 12px;
+   }
+
+   .ft-col-heading {
+     font-size: 16px;
+   }
+
+   .ft-link {
+     font-size: 13px;
+   }
+
+   .ft-city-chip {
+     font-size: 10px;
+     padding: 5px 10px;
+   }
+
+   .ft-bottom-links {
+     flex-direction: column;
+     gap: 8px;
+   }
+ }

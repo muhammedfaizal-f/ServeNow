@@ -1003,3 +1003,121 @@ body {
         border-right: 0.5px solid rgba(255, 255, 255, .06)
     }
 }
+
+/* ================= MOBILE HEADER ================= */
+/* ================= MOBILE (320px - 480px) ================= */
+@media (max-width:480px){
+
+  /* ---------- NAV ---------- */
+
+  .pv-nav{
+    padding:12px;
+    height:auto;
+    min-height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .pv-logo{
+    font-size:16px;
+  }
+
+  .pv-nav-div,
+  .pv-nav-title{
+    display:none;
+  }
+
+  .pv-nav-right{
+    gap:6px;
+  }
+
+  .avail-pill{
+    padding:6px 10px;
+    font-size:11px;
+  }
+
+  .pv-logout{
+    width:36px;
+    height:36px;
+    padding:0;
+    border-radius:50%;
+    justify-content:center;
+    font-size:0;
+  }
+
+  .pv-logout svg{
+    width:18px;
+    height:18px;
+  }
+
+  /* ---------- HERO ---------- */
+
+  .pv-hero{
+    padding:30px 16px 0;
+  }
+
+  .hero-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:18px;
+  }
+
+  /* ROUND PROFILE EXACT CENTER */
+  .av-ring{
+    width:115px;
+    height:115px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+
+  .av-inner{
+    font-size:34px;
+  }
+
+  .hero-info{
+    width:100%;
+    padding-bottom:0;
+    text-align:center;
+  }
+
+  .hero-name{
+    font-size:26px;
+    line-height:1.1;
+    margin-bottom:8px;
+    text-align:center;
+  }
+
+  .hero-role{
+    text-align:center;
+    margin-bottom:14px;
+  }
+
+  .hero-tags{
+    justify-content:center;
+    gap:10px;
+  }
+
+  .hero-tag{
+    font-size:11px;
+    padding:7px 12px;
+  }
+
+  /* ---------- STATS ---------- */
+
+  .hero-stats{
+    margin-top:25px;
+    flex-wrap:wrap;
+  }
+
+  .hs-item{
+    flex:0 0 50%;
+    min-height:85px;
+  }
+}

@@ -555,3 +555,144 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Mobile (320px - 480px) */
+        @media (max-width: 480px) {
+            .tm-root {
+                padding: 70px 0 60px;
+            }
+
+            .tm-inner {
+                padding: 0 14px;
+            }
+
+            /* Stats */
+            .tm-stats {
+                grid-template-columns: repeat(2, 1fr);
+                margin-bottom: 50px;
+            }
+
+            .tm-stat {
+                padding: 16px 8px;
+            }
+
+            .tm-stat-val {
+                font-size: 20px;
+            }
+
+            .tm-stat-label {
+                font-size: 11px;
+                text-align: center;
+            }
+
+            /* Header */
+            .tm-title {
+                font-size: 40px;
+                line-height: 1.1;
+            }
+
+            .tm-title span {
+                display: block;
+            }
+
+            .tm-subtitle {
+                font-size: 13px;
+                padding: 0 10px;
+            }
+
+            /* Featured card */
+            .tm-big-card {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+
+            .tm-big-top {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .tm-verified {
+                margin-top: 6px;
+            }
+
+            .tm-big-text {
+                font-size: 13px;
+                line-height: 1.7;
+            }
+
+            .tm-big-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* Mini cards */
+            .tm-mini-stack {
+                flex-direction: column;
+                overflow: visible;
+            }
+
+            .tm-mini-card {
+                min-width: 100%;
+            }
+
+            /* CTA */
+            .tm-cta {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .tm-cta-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Decorative quote */
+            .tm-quote-bg {
+                font-size: 180px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tm-inner {
+                padding: 0 12px;
+            }
+
+            .tm-stat {
+                padding: 14px 6px;
+            }
+
+            .tm-stat-val {
+                font-size: 16px;
+            }
+
+            .tm-stat-label {
+                font-size: 10px;
+            }
+
+            .tm-title {
+                font-size: 32px;
+            }
+
+            .tm-big-avatar {
+                width: 48px;
+                height: 48px;
+                font-size: 15px;
+            }
+
+            .tm-big-name {
+                font-size: 15px;
+            }
+
+            .tm-big-text {
+                font-size: 12.5px;
+            }
+
+            .tm-nav {
+                gap: 10px;
+            }
+
+            .tm-nav-btn {
+                width: 36px;
+                height: 36px;
+            }
+        }

@@ -632,7 +632,154 @@
     color: white;
 }
 
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .hero-root {
+        overflow-x: hidden;
+    }
 
+    .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 90px 18px 50px;
+        gap: 40px;
+    }
+
+    .hero-left {
+        gap: 20px;
+    }
+
+    .hero-badge {
+        font-size: 11px;
+        padding: 7px 14px;
+    }
+
+    .hero-title {
+        font-size: 42px;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        word-break: break-word;
+    }
+
+    .hero-sub {
+        font-size: 14px;
+        line-height: 1.6;
+        max-width: 100%;
+    }
+
+    /* Search Box */
+    .search-box {
+        flex-direction: column;
+        padding: 12px;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .search-field,
+    .city-select-wrap,
+    .btn-search {
+        width: 100%;
+    }
+
+    .city-select {
+        width: 100%;
+    }
+
+    .search-divider {
+        display: none;
+    }
+
+    .btn-search {
+        justify-content: center;
+        height: 46px;
+    }
+
+    /* Popular categories */
+    .quick-cats {
+        gap: 10px;
+    }
+
+    .cat-chip {
+        font-size: 11px;
+        padding: 7px 12px;
+    }
+
+    /* Stats */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .stat-divider {
+        display: none;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+
+    /* Right side card */
+    .hero-right {
+        height: auto;
+    }
+
+    .illus-card {
+        width: 100%;
+        max-width: 300px;
+        margin: auto;
+    }
+
+    .float-card {
+        display: none;
+    }
+
+    .provider-row {
+        padding: 10px;
+    }
+
+    .p-price {
+        font-size: 11px;
+    }
+
+    .illus-card {
+        width: 100%;
+        max-width: 300px;
+        margin: auto;
+        height: auto;
+    }
+
+}
+
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 34px;
+    }
+
+    .hero-badge {
+        font-size: 10px;
+    }
+
+    .cat-chip {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+
+    .illus-card {
+        width: 100%;
+        max-width: 300px;
+        margin: auto;
+        height: auto;
+    }
+
+}
 
 @keyframes blobFloat {
     from {
