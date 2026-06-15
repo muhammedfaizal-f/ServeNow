@@ -200,7 +200,7 @@ The app will run at `http://localhost:5173` and the API at `http://localhost:500
 
 **Faizal**
 - GitHub: [@Muhammed Faizal F](https://github.com/muhammedfaizal-f)
-- LinkedIn: [linkedin.com/in/contact-muhammedfaizal](www.linkedin.com/in/contact-muhammedfaizal)
+- LinkedIn: [linkedin.com/in/contact-muhammedfaizal](https://www.linkedin.com/in/contact-muhammedfaizal/)
 - Location: Coimbatore, Tamil Nadu, India
 
 ---
