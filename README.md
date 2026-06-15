@@ -180,9 +180,9 @@ The app will run at `http://localhost:5173` and the API at `http://localhost:500
 | Page | Preview |
 |---|---|
 | Home | ![home](home.png) |
-| Explore Providers | ![explore](#) |
-| Book Now | ![book](#) |
-| Admin Dashboard | ![admin](#) |
+| Explore Providers | ![explore](ExploreProvider.png) |
+| Book Now | ![book](BookNow.png) |
+| Admin Dashboard | ![admin](Admin.png) |
 
 ---
 
