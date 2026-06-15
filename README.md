@@ -186,16 +186,6 @@ The app will run at `http://localhost:5173` and the API at `http://localhost:500
 
 ---
 
-## 🚧 Roadmap
-
-- [ ] Real-time booking notifications (Socket.io)
-- [ ] Provider availability calendar
-- [ ] Payment gateway integration (Razorpay)
-- [ ] Mobile app (React Native)
-- [ ] Email confirmation on booking
-
----
-
 ## 👤 Author
 
 **Faizal**
