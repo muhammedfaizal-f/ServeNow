@@ -803,3 +803,108 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ================= MOBILE (320px - 480px) ================= */
+@media (max-width:480px){
+
+  .rv-nav{
+    padding:12px;
+    height:auto;
+    min-height:65px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .rv-logo{
+    font-size:16px;
+  }
+
+  .rv-nav-div{
+    display:none;
+  }
+
+  .rv-back{
+    font-size:12px;
+  }
+
+  /* Review mode buttons */
+  .rv-nav > div:last-child{
+    width:100%;
+    margin-left:0 !important;
+    display:grid !important;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .rv-nav > div:last-child button{
+    width:100%;
+    font-size:12px !important;
+    padding:10px 12px !important;
+  }
+
+  .rv-write,
+  .rv-view{
+    padding:24px 14px 60px;
+  }
+
+  /* Provider card */
+  .prov-mini{
+    flex-direction:column;
+    text-align:center;
+    padding:20px 16px;
+    gap:14px;
+  }
+
+  .prov-mini-av{
+    width:64px;
+    height:64px;
+    font-size:22px;
+  }
+
+  .prov-mini-name{
+    font-size:20px;
+  }
+
+  .prov-mini-role,
+  .prov-mini-booking{
+    text-align:center;
+  }
+
+  .prov-mini-badge{
+    margin:0;
+    align-self:center;
+  }
+
+  /* Star rating */
+  .star-section{
+    padding:20px 14px;
+  }
+
+  .sub-grid{
+    grid-template-columns:1fr;
+  }
+
+  .rv-card-top{
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .rv-service-tag{
+    align-self:flex-start;
+  }
+
+  .rv-actions{
+    flex-wrap:wrap;
+  }
+
+  .rv-helpful-btn,
+  .rv-flag-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .rv-my-card{
+    flex-direction:column;
+    text-align:center;
+  }
+}
