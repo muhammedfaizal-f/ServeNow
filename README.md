@@ -179,7 +179,7 @@ The app will run at `http://localhost:5173` and the API at `http://localhost:500
 
 | Page | Preview |
 |---|---|
-| Home | ![home](#) |
+| Home | ![home](home.png) |
 | Explore Providers | ![explore](#) |
 | Book Now | ![book](#) |
 | Admin Dashboard | ![admin](#) |
