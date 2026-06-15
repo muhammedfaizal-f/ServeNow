@@ -199,8 +199,4 @@ The app will run at `http://localhost:5173` and the API at `http://localhost:500
 
 This project is licensed under the [MIT License](LICENSE).
 
----
 
-<div align="center">
-  <p>Made with ☕ in Coimbatore</p>
-</div>
