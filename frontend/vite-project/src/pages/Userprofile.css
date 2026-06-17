@@ -203,7 +203,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: ringSpin 8s linear infinite;
+   /*  animation: ringSpin 8s linear infinite; */
 }
 
 .avatar-inner {

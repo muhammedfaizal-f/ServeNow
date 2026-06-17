@@ -249,7 +249,7 @@ export default function LoginRegister() {
             </button>
 
             <div className="div-row"><div className="div-line" /><span className="div-t">or continue with</span><div className="div-line" /></div>
-            <div className="social-auth">
+            {/* <div className="social-auth">
               <button className="google-btn" onClick={handleGoogleLogin}>
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="google" />
                 Continue with Google
@@ -274,7 +274,7 @@ export default function LoginRegister() {
                 )}
               </div>
             </div>
-
+ */}
             <div className="foot">
               {mode === "login" ? <>No account? <span onClick={() => switchMode("register")}>Sign up free</span></> : <>Have an account? <span onClick={() => switchMode("login")}>Sign in</span></>}
             </div>
