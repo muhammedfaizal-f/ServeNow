@@ -11,14 +11,7 @@ import { userAPI, bookingAPI } from "../api/services";
 
 
 
-const MOCK_BOOKINGS = [
-    { _id: "b1", service: { title: "Pipe Repair", category: "Plumbing" }, provider: { name: "Ravi Kumar", avatar: "RK", color: "#4A90E2" }, bookingDate: "2025-08-10", timeSlot: { start: "10:00 AM" }, status: "completed", totalAmount: 299, paymentMethod: "cash" },
-    { _id: "b2", service: { title: "Fan Fitting", category: "Electrician" }, provider: { name: "Suresh M.", avatar: "SM", color: "#10B981" }, bookingDate: "2025-08-18", timeSlot: { start: "02:00 PM" }, status: "confirmed", totalAmount: 150, paymentMethod: "online" },
-    { _id: "b3", service: { title: "Deep Cleaning", category: "Home Cleaning" }, provider: { name: "Meena S.", avatar: "MS", color: "#A78BFA" }, bookingDate: "2025-08-20", timeSlot: { start: "09:00 AM" }, status: "pending", totalAmount: 999, paymentMethod: "cash" },
-    { _id: "b4", service: { title: "AC Service", category: "AC Repair" }, provider: { name: "Arjun D.", avatar: "AD", color: "#06B6D4" }, bookingDate: "2025-07-28", timeSlot: { start: "03:00 PM" }, status: "completed", totalAmount: 499, paymentMethod: "online" },
-    { _id: "b5", service: { title: "Maths Tutoring", category: "Tutoring" }, provider: { name: "Priya R.", avatar: "PR", color: "#FF6B35" }, bookingDate: "2025-07-15", timeSlot: { start: "05:00 PM" }, status: "cancelled", totalAmount: 250, paymentMethod: "cash" },
-    { _id: "b6", service: { title: "Tap Install", category: "Plumbing" }, provider: { name: "Ravi Kumar", avatar: "RK", color: "#4A90E2" }, bookingDate: "2025-06-30", timeSlot: { start: "11:00 AM" }, status: "completed", totalAmount: 199, paymentMethod: "cash" },
-];
+
 
 const STATUS_CONFIG = {
     completed: { label: "Completed", color: "#10B981", bg: "rgba(16,185,129,.12)", icon: "✓" },

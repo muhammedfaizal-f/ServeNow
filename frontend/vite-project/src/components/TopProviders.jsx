@@ -3,124 +3,10 @@ import { useState } from 'react'
 import './TopProviders.css'
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import api from "../api/axios";
 
 
-const providers = [
-    {
-        _id: "6a258fe1523d726caaa558b4",
-        name: "Ravi Kumar",
-        role: "Master Plumber",
-        location: "Gandhipuram, Coimbatore",
-        rating: 4.9,
-        reviews: 312,
-        jobs: "800+",
-        price: "₹299/hr",
-        badge: "Top Rated",
-        badgeColor: "#F59E0B",
-        available: true,
-        avatar: "RK",
-        avatarBg: "#1e3a5f",
-        avatarColor: "#4A90E2",
-        skills: ["Pipe Repair", "Leak Fix", "Tap Install"],
-        color: "#4A90E2",
-        responseTime: "~10 mins",
-    },
-    {
-        _id: "6a258fe1523d726caaa558b5",
-        name: "Suresh M.",
-        role: "Senior Electrician",
-        location: "RS Puram, Coimbatore",
-        rating: 4.8,
-        reviews: 245,
-        jobs: "600+",
-        price: "₹350/hr",
-        badge: "Pro Verified",
-        badgeColor: "#10B981",
-        available: true,
-        avatar: "SM",
-        avatarBg: "#0a2e18",
-        avatarColor: "#10B981",
-        skills: ["Wiring", "Fan Fitting", "Inverter"],
-        color: "#10B981",
-        responseTime: "~15 mins",
-    },
-    {
-        _id: "6a258fe1523d726caaa558b6",
-        name: "Meena S.",
-        role: "Deep Cleaning Expert",
-        location: "Saibaba Colony, CBE",
-        rating: 5.0,
-        reviews: 189,
-        jobs: "420+",
-        price: "₹199/hr",
-        badge: "⭐ Perfect Score",
-        badgeColor: "#A78BFA",
-        available: true,
-        avatar: "MS",
-        avatarBg: "#1e0f3d",
-        avatarColor: "#A78BFA",
-        skills: ["Deep Clean", "Kitchen", "Bathroom"],
-        color: "#A78BFA",
-        responseTime: "~5 mins",
-    },
-    {
-        _id: "6a258fe1523d726caaa558b7",
-        name: "Arjun D.",
-        role: "AC & Appliance Tech",
-        location: "Peelamedu, Coimbatore",
-        rating: 4.7,
-        reviews: 178,
-        jobs: "390+",
-        price: "₹450/hr",
-        badge: "Fast Response",
-        badgeColor: "#06B6D4",
-        available: false,
-        avatar: "AD",
-        avatarBg: "#052030",
-        avatarColor: "#06B6D4",
-        skills: ["AC Service", "Gas Refill", "Deep Clean"],
-        color: "#06B6D4",
-        responseTime: "~20 mins",
-    },
-    {
-        _id: "6a258fe1523d726caaa558b8",
-        name: "Priya R.",
-        role: "Home Tutor",
-        location: "Peelamedu, Coimbatore",
-        rating: 4.9,
-        reviews: 401,
-        jobs: "1.2K+",
-        price: "₹250/hr",
-        badge: "Most Booked",
-        badgeColor: "#FF6B35",
-        available: true,
-        avatar: "PR",
-        avatarBg: "#3d1500",
-        avatarColor: "#FF6B35",
-        skills: ["Maths", "Science", "English"],
-        color: "#FF6B35",
-        responseTime: "~8 mins",
-    },
-    {
-        _id: "6a258fe1523d726caaa558b9",
-        name: "Karthik V.",
-        role: "Carpenter & Fabricator",
-        location: "Saravanampatti, CBE",
-        rating: 4.6,
-        reviews: 134,
-        jobs: "280+",
-        price: "₹380/hr",
-        badge: "New & Rising",
-        badgeColor: "#FB7185",
-        available: true,
-        avatar: "KV",
-        avatarBg: "#3b0a17",
-        avatarColor: "#FB7185",
-        skills: ["Furniture Fix", "Custom Shelf", "Modular"],
-        color: "#FB7185",
-        responseTime: "~25 mins",
-    },
-];
 
 const categories = ["All", "Plumbing", "Electrical", "Cleaning", "AC Repair", "Tutoring", "Carpentry"];
 
@@ -150,10 +36,71 @@ const StarRating = ({ rating, color }) => {
 
 const TopProviders = () => {
     const navigate = useNavigate();
+
+    const [providers, setProviders] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     const [activeCategory, setActiveCategory] = useState("All");
     const [hovered, setHovered] = useState(null);
     const [booked, setBooked] = useState(null);
 
+    useEffect(() => {
+        loadProviders();
+    }, []);
+
+    const loadProviders = async () => {
+        try {
+            const res = await api.get("/providers");
+
+            const providers = (res.data.providers || []).map((p) => {
+                const userName = p.user?.name || "Provider";
+
+                return {
+                    _id: p._id,
+                    name: userName,
+                    role: `${p.category} Expert`,
+                    location: p.location?.city
+                        ? `${p.location.address || ""}, ${p.location.city}`.replace(/^,\s*/, "")
+                        : "Coimbatore",
+
+                    rating: p.averageRating ?? 0,
+                    reviews: p.totalReviews ?? 0,
+                    jobs: p.totalJobsDone ? `${p.totalJobsDone}+` : "0",
+
+                    price: p.hourlyRate ?? 0,
+
+                    badge: p.badge || "Verified",
+                    badgeColor: p.isVerified ? "#10B981" : "#94A3B8",
+
+                    available: p.isAvailable ?? false,
+
+                    skills: p.skills || [],
+
+                    avatar: userName
+                        .split(" ")
+                        .map((w) => w[0])
+                        .join("")
+                        .slice(0, 2)
+                        .toUpperCase(),
+
+                    avatarBg: "#1e3a5f",
+                    avatarColor: "#4A90E2",
+
+                    color: "#FF6B35",
+
+                    responseTime: p.responseTime || "~15 mins",
+                };
+            });
+
+            setProviders(providers);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // rest of your component...
     const handleBook = (i) => {
         setBooked(i);
         setTimeout(() => setBooked(null), 2000);
@@ -181,7 +128,7 @@ const TopProviders = () => {
                         <div className="tp-header-right">
                             <div className="tp-live">
                                 <span className="tp-live-dot" />
-                                <span>486 providers active right now</span>
+                                <span>{providers.length} providers available</span>
                             </div>
                             <Link to="/providers" className='pro'>
                                 <button className="tp-view-all">
@@ -270,7 +217,11 @@ const TopProviders = () => {
                                         <div className="prov-name">{p.name}</div>
                                         <div className="prov-role">{p.role}</div>
                                         <div className="prov-location">
-                                            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+                                                <circle cx="12" cy="10" r="3" />
+                                            </svg>
+
                                             {p.location}
                                         </div>
                                     </div>
@@ -308,12 +259,17 @@ const TopProviders = () => {
                                         </div>
                                         <div className="prov-meta-divider" />
                                         <div className="prov-meta-item">
-                                            <span className="prov-meta-val">{p.price}</span>
+                                            <span className="prov-meta-val">₹{p.price}/hr</span>
                                             <span className="prov-meta-label">Starting</span>
                                         </div>
                                         <div className="prov-meta-divider" />
                                         <div className="prov-meta-item">
-                                            <span className="prov-meta-val" style={{ color: p.color }}>{p.rating}★</span>
+                                            <span
+                                                className="prov-meta-val"
+                                                style={{ color: p.color }}
+                                            >
+                                                {p.rating > 0 ? `${p.rating}★` : "—"}
+                                            </span>
                                             <span className="prov-meta-label">Rating</span>
                                         </div>
                                     </div>
@@ -354,7 +310,7 @@ const TopProviders = () => {
                                                 </>
                                             ) : (
                                                 <>
-                                                    Book Now · {p.price}
+                                                    Book Now · ₹{p.price}/hr
                                                 </>
                                             )}
                                         </button>
