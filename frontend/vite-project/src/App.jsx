@@ -6,7 +6,7 @@ import AdminRoute from "./components/AdminRoute";
 
 
 import Home from "./pages/Home";
-import LoginRegister from "./pages/Loginregister";   // match your exact filename
+import LoginRegister from "./pages/LoginRegister";   // match your exact filename
 import Userprofile from "./pages/Userprofile";
 import ProviderProfile from "./pages/ProviderProfile";
 import AdminProfile from "./pages/AdminProfile";
