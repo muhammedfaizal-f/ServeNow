@@ -7,89 +7,47 @@ const { Booking, Provider, Service } = require("../models");
 // ────────────────────────────────────────────────────────────────────────────
 const createBooking = async (req, res) => {
   try {
-    console.log("BODY =", req.body);
-    const {
-      providerId,
-      serviceId,
+    const { providerId, serviceId, bookingDate, timeSlot, jobAddress, paymentMethod, userNotes } = req.body;
+
+    // ── Validate ObjectIds first ──────────────────────────────────
+    if (!mongoose.Types.ObjectId.isValid(providerId)) {
+      return res.status(400).json({ success:false, message: "Invalid providerId — must be a MongoDB ObjectId." });
+    }
+    if (!mongoose.Types.ObjectId.isValid(serviceId)) {
+      return res.status(400).json({ success:false, message: "Invalid serviceId — must be a MongoDB ObjectId." });
+    }
+
+    // ── Check provider exists ─────────────────────────────────────
+    const provider = await Provider.findById(providerId);
+    if (!provider) {
+      return res.status(404).json({ success:false, message: "Provider not found." });
+    }
+
+    // ── Check service exists ──────────────────────────────────────
+    const service = await Service.findById(serviceId);
+    if (!service) {
+      return res.status(404).json({ success:false, message: "Service not found." });
+    }
+
+    // ── Create booking ────────────────────────────────────────────
+    const booking = await Booking.create({
+      user:          req.user._id,
+      provider:      providerId,
+      service:       serviceId,
       bookingDate,
       timeSlot,
       jobAddress,
-      paymentMethod,
-      userNotes,
-    } = req.body;
-
-    if (!providerId || !serviceId || !bookingDate || !timeSlot || !jobAddress) {
-      return res.status(400).json({
-        success: false,
-        message: "providerId, serviceId, bookingDate, timeSlot and jobAddress are required.",
-      });
-    }
-
-    // Check provider exists and is available
-    const provider = await Provider.findById(providerId);
-    if (!provider || !provider.isActive) {
-      return res.status(404).json({ success: false, message: "Provider not found." });
-    }
-    if (!provider.isAvailable) {
-      return res.status(400).json({ success: false, message: "Provider is currently unavailable." });
-    }
-
-    // Check service exists
-    const service = await Service.findById(serviceId);
-    if (!service || !service.isActive) {
-      return res.status(404).json({ success: false, message: "Service not found." });
-    }
-
-    // Check time slot conflict for this provider
-    const conflict = await Booking.findOne({
-      provider: providerId,
-      bookingDate: new Date(bookingDate),
-      status: { $in: ["pending", "confirmed", "in-progress"] },
-      "timeSlot.start": timeSlot.start,
-    });
-
-    if (conflict) {
-      return res.status(400).json({
-        success: false,
-        message: "This time slot is already booked. Please choose another.",
-      });
-    }
-
-    // Calculate total
-    const totalAmount =
-      service.pricingType === "fixed" ? service.price : provider.hourlyRate;
-
-    const booking = await Booking.create({
-      user: req.user._id,
-      provider: providerId,
-      service: serviceId,
-      bookingDate: new Date(bookingDate),
-      timeSlot,
-      jobAddress,
-      totalAmount,
+      totalAmount:   service.price,
       paymentMethod: paymentMethod || "cash",
-      userNotes: userNotes || "",
-      status: "pending",
+      userNotes:     userNotes || "",
+      status:        "pending",
     });
 
-    // Increment service booking count
-    await Service.findByIdAndUpdate(serviceId, { $inc: { bookingCount: 1 } });
+    res.status(201).json({ success:true, message:"Booking created.", booking });
 
-    const populated = await Booking.findById(booking._id)
-      .populate({ path: "provider", populate: { path: "user", select: "name avatar phone" } })
-      .populate("service", "title category price")
-      .populate("user", "name phone avatar");
-
-    res.status(201).json({
-      success: true,
-      message: "Booking created. Waiting for provider confirmation.",
-      booking: populated,
-    });
   } catch (error) {
-    console.error(error);
-
-    console.error("createBooking:", error);
-    res.status(500).json({ success: false, message: "Server error." });
+    console.error("createBooking error:", error);  // ← shows exact error in Render logs
+    res.status(500).json({ success:false, message: error.message || "Server error." });
   }
 };
 
