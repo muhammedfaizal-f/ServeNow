@@ -33,9 +33,20 @@ const app = express();
 // ── Core Middleware ───────────────────────────────────────────────────────────
 
 // CORS — allow frontend origin
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://serve-now-eight.vercel.app",
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173", // Vite default port
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
