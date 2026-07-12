@@ -1,4 +1,6 @@
-const { Provider, User, Booking, Review, Service } = require("../models");
+const mongoose = require("mongoose");
+const { Provider, User, Booking, Review } = require("../models");
+
 // ────────────────────────────────────────────────────────────────────────────
 // @route   GET /api/providers
 // @desc    Get all providers with filters, search, sort, pagination
@@ -14,18 +16,18 @@ const getAllProviders = async (req, res) => {
       minRating,
       isAvailable,
       search,
-      sort = "averageRating",
-      page = 1,
-      limit = 12,
+      sort    = "averageRating",
+      page    = 1,
+      limit   = 12,
     } = req.query;
 
     // ── Build filter ──────────────────────────────────────────────────────────
     const filter = { isActive: true };
 
-    if (category) filter.category = category;
-    if (city) filter["location.city"] = new RegExp(city, "i");
-    if (isAvailable) filter.isAvailable = isAvailable === "true";
-    if (minRating) filter.averageRating = { $gte: Number(minRating) };
+    if (category)    filter.category            = category;
+    if (city)        filter["location.city"]    = new RegExp(city, "i");
+    if (isAvailable) filter.isAvailable         = isAvailable === "true";
+    if (minRating)   filter.averageRating        = { $gte: Number(minRating) };
     if (minRate || maxRate) {
       filter.hourlyRate = {};
       if (minRate) filter.hourlyRate.$gte = Number(minRate);
@@ -35,19 +37,19 @@ const getAllProviders = async (req, res) => {
     // ── Search by skill or bio keyword ───────────────────────────────────────
     if (search) {
       filter.$or = [
-        { skills: { $regex: search, $options: "i" } },
-        { bio: { $regex: search, $options: "i" } },
+        { skills:   { $regex: search, $options: "i" } },
+        { bio:      { $regex: search, $options: "i" } },
         { category: { $regex: search, $options: "i" } },
       ];
     }
 
     // ── Sort options ─────────────────────────────────────────────────────────
     const sortOptions = {
-      rating: { averageRating: -1 },
-      priceLow: { hourlyRate: 1 },
-      priceHigh: { hourlyRate: -1 },
-      jobs: { totalJobsDone: -1 },
-      newest: { createdAt: -1 },
+      rating:     { averageRating: -1 },
+      priceLow:   { hourlyRate:    1  },
+      priceHigh:  { hourlyRate:    -1 },
+      jobs:       { totalJobsDone: -1 },
+      newest:     { createdAt:     -1 },
     };
     const sortBy = sortOptions[sort] || sortOptions.rating;
 
@@ -63,9 +65,9 @@ const getAllProviders = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success: true,
+      success:    true,
       total,
-      page: Number(page),
+      page:       Number(page),
       totalPages: Math.ceil(total / Number(limit)),
       providers,
     });
@@ -121,12 +123,12 @@ const getNearbyProviders = async (req, res) => {
     }
 
     const filter = {
-      isActive: true,
+      isActive:    true,
       isAvailable: true,
       "location.coordinates": {
         $near: {
           $geometry: {
-            type: "Point",
+            type:        "Point",
             coordinates: [Number(lng), Number(lat)],
           },
           $maxDistance: Number(radius) * 1000, // convert km → metres
@@ -141,8 +143,8 @@ const getNearbyProviders = async (req, res) => {
       .limit(20);
 
     res.status(200).json({
-      success: true,
-      total: providers.length,
+      success:   true,
+      total:     providers.length,
       providers,
     });
   } catch (error) {
@@ -199,17 +201,17 @@ const updateProviderProfile = async (req, res) => {
     } = req.body;
 
     const updateFields = {};
-    if (bio !== undefined) updateFields.bio = bio;
-    if (category) updateFields.category = category;
-    if (skills) updateFields.skills = skills;
-    if (experience !== undefined) updateFields.experience = experience;
-    if (hourlyRate !== undefined) updateFields.hourlyRate = hourlyRate;
-    if (location) updateFields.location = location;
-    if (isAvailable !== undefined) updateFields.isAvailable = isAvailable;
-    if (availableDays) updateFields.availableDays = availableDays;
-    if (workingHours) updateFields.workingHours = workingHours;
-    if (responseTime) updateFields.responseTime = responseTime;
-    if (profilePhoto) updateFields.profilePhoto = profilePhoto;
+    if (bio           !== undefined) updateFields.bio           = bio;
+    if (category)                    updateFields.category      = category;
+    if (skills)                      updateFields.skills        = skills;
+    if (experience    !== undefined) updateFields.experience    = experience;
+    if (hourlyRate    !== undefined) updateFields.hourlyRate    = hourlyRate;
+    if (location)                    updateFields.location      = location;
+    if (isAvailable   !== undefined) updateFields.isAvailable   = isAvailable;
+    if (availableDays)               updateFields.availableDays = availableDays;
+    if (workingHours)                updateFields.workingHours  = workingHours;
+    if (responseTime)                updateFields.responseTime  = responseTime;
+    if (profilePhoto)                updateFields.profilePhoto  = profilePhoto;
 
     const provider = await Provider.findOneAndUpdate(
       { user: req.user._id },
@@ -217,25 +219,8 @@ const updateProviderProfile = async (req, res) => {
       { new: true, runValidators: true }
     ).populate("user", "name avatar phone");
 
-    if (skills && Array.isArray(skills)) {
-
-      await Service.deleteMany({
-        provider: provider._id
-      });
-
-      const services = skills.map(skill => ({
-        provider: provider._id,
-        title: skill,
-        description: `${skill} service`,
-        category: provider.category,
-        subCategory: skill,
-        pricingType: "fixed",
-        price: provider.hourlyRate || 0,
-        estimatedDuration: 60,
-        isActive: true,
-      }));
-
-      await Service.insertMany(services);
+    if (!provider) {
+      return res.status(404).json({ success: false, message: "Provider profile not found." });
     }
 
     res.status(200).json({
@@ -298,7 +283,7 @@ const getProviderDashboard = async (req, res) => {
         cancelledBookings,
         totalEarnings,
         averageRating: provider.averageRating,
-        totalReviews: provider.totalReviews,
+        totalReviews:  provider.totalReviews,
         totalJobsDone: provider.totalJobsDone,
       },
       recentBookings,
@@ -326,8 +311,8 @@ const toggleAvailability = async (req, res) => {
     await provider.save();
 
     res.status(200).json({
-      success: true,
-      message: `You are now ${provider.isAvailable ? "available" : "unavailable"}.`,
+      success:     true,
+      message:     `You are now ${provider.isAvailable ? "available" : "unavailable"}.`,
       isAvailable: provider.isAvailable,
     });
   } catch (error) {

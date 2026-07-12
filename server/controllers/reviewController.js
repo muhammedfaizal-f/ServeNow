@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { Review, Booking, Provider } = require("../models");
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -44,9 +45,9 @@ const createReview = async (req, res) => {
 
     // Create the review
     const review = await Review.create({
-      user: req.user._id,
-      provider: booking.provider,
-      booking: bookingId,
+      user:       req.user._id,
+      provider:   booking.provider,
+      booking:    bookingId,
       rating,
       comment,
       subRatings: subRatings || {},
@@ -59,13 +60,13 @@ const createReview = async (req, res) => {
     // Note: provider averageRating is auto-updated via Review post-save hook (Section 1)
 
     const populated = await Review.findById(review._id)
-      .populate("user", "name avatar")
-      .populate("provider", "category averageRating");
+      .populate("user",    "name avatar")
+      .populate("provider","category averageRating");
 
     res.status(201).json({
       success: true,
       message: "Review submitted successfully. Thank you!",
-      review: populated,
+      review:  populated,
     });
   } catch (error) {
     // Unique index on booking — duplicate review attempt
@@ -94,16 +95,16 @@ const getProviderReviews = async (req, res) => {
     const { page = 1, limit = 10, sort = "newest", rating } = req.query;
 
     const filter = {
-      provider: req.params.providerId,
+      provider:  req.params.providerId,
       isVisible: true,
     };
     if (rating) filter.rating = Number(rating);
 
     const sortOptions = {
-      newest: { createdAt: -1 },
-      oldest: { createdAt: 1 },
+      newest:  { createdAt: -1 },
+      oldest:  { createdAt:  1 },
       highest: { rating: -1 },
-      lowest: { rating: 1 },
+      lowest:  { rating:  1 },
       helpful: { helpfulVotes: -1 },
     };
 
@@ -119,34 +120,20 @@ const getProviderReviews = async (req, res) => {
     ]);
 
     // Rating distribution (1★ to 5★ counts)
-    const mongoose = require("mongoose");
-
     const distribution = await Review.aggregate([
-      {
-        $match: {
-          provider: new mongoose.Types.ObjectId(req.params.providerId),
-          isVisible: true,
-        },
-      },
-      {
-        $group: {
-          _id: "$rating",
-          count: { $sum: 1 },
-        },
-      },
-      {
-        $sort: { _id: -1 },
-      },
+      { $match: { provider: require("mongoose").Types.ObjectId(req.params.providerId), isVisible: true } },
+      { $group: { _id: "$rating", count: { $sum: 1 } } },
+      { $sort: { _id: -1 } },
     ]);
 
     const ratingDist = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
     distribution.forEach((d) => { ratingDist[d._id] = d.count; });
 
     res.status(200).json({
-      success: true,
+      success:      true,
       total,
-      page: Number(page),
-      totalPages: Math.ceil(total / Number(limit)),
+      page:         Number(page),
+      totalPages:   Math.ceil(total / Number(limit)),
       ratingDist,
       reviews,
     });
@@ -187,9 +174,9 @@ const getMyReviews = async (req, res) => {
 const getReviewById = async (req, res) => {
   try {
     const review = await Review.findById(req.params.id)
-      .populate("user", "name avatar")
+      .populate("user",     "name avatar")
       .populate("provider", "category averageRating")
-      .populate("booking", "bookingDate timeSlot");
+      .populate("booking",  "bookingDate timeSlot");
 
     if (!review || !review.isVisible) {
       return res.status(404).json({ success: false, message: "Review not found." });
@@ -220,8 +207,8 @@ const updateReview = async (req, res) => {
 
     const { rating, comment, subRatings } = req.body;
 
-    if (rating) review.rating = rating;
-    if (comment) review.comment = comment;
+    if (rating)     review.rating     = rating;
+    if (comment)    review.comment    = comment;
     if (subRatings) review.subRatings = subRatings;
 
     await review.save(); // post-save hook recalculates provider avg rating
@@ -312,10 +299,10 @@ const toggleHelpful = async (req, res) => {
     await review.save();
 
     res.status(200).json({
-      success: true,
-      message: alreadyVoted ? "Vote removed." : "Marked as helpful.",
+      success:      true,
+      message:      alreadyVoted ? "Vote removed." : "Marked as helpful.",
       helpfulVotes: review.helpfulVotes,
-      voted: !alreadyVoted,
+      voted:        !alreadyVoted,
     });
   } catch (error) {
     console.error("toggleHelpful:", error);
@@ -342,7 +329,7 @@ const flagReview = async (req, res) => {
       });
     }
 
-    review.isFlagged = true;
+    review.isFlagged  = true;
     review.flagReason = req.body.reason || "Reported by user";
     await review.save();
 
