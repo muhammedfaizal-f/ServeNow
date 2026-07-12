@@ -112,17 +112,19 @@ const bookingSchema = new mongoose.Schema(
 );
 
 // ── Indexes ───────────────────────────────────────────────────────────────────
-bookingSchema.index({ user: 1, status: 1 });       // user's booking history
-bookingSchema.index({ provider: 1, status: 1 });   // provider's job list
-bookingSchema.index({ bookingDate: 1 });            // schedule queries
-bookingSchema.index({ status: 1, bookingDate: 1 }); // admin dashboard
+bookingSchema.index({ user: 1, status: 1 });
+bookingSchema.index({ provider: 1, status: 1 });
+bookingSchema.index({ bookingDate: 1 });
+bookingSchema.index({ status: 1, bookingDate: 1 });
 
-// ── Auto-set timestamps on status changes ────────────────────────────────────
+// ── Pre-save hook — auto-set timestamps on status change ──────────────────────
+// IMPORTANT: must use function(next) NOT async function — otherwise next breaks
 bookingSchema.pre("save", function (next) {
   if (this.isModified("status")) {
-    if (this.status === "confirmed") this.confirmedAt = new Date();
-    if (this.status === "completed") this.completedAt = new Date();
-    if (this.status === "cancelled") this.cancelledAt = new Date();
+    const now = new Date();
+    if (this.status === "confirmed")    this.confirmedAt  = now;
+    if (this.status === "completed")    this.completedAt  = now;
+    if (this.status === "cancelled")    this.cancelledAt  = now;
   }
   next();
 });
