@@ -33,23 +33,16 @@ const app = express();
 // ── Core Middleware ───────────────────────────────────────────────────────────
 
 // CORS — allow frontend origin
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://serve-now-eight.vercel.app",
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    origin: [
+      "http://localhost:5173",                      // local dev
+      process.env.CLIENT_URL,                       // production Vercel URL
+      "https://serve-now-eight.vercel.app",         // hardcoded backup
+    ],
+    methods:        ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
+    allowedHeaders: ["Content-Type","Authorization"],
+    credentials:    true,
   })
 );
 

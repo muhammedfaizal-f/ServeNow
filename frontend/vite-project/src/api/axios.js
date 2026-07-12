@@ -5,8 +5,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://servenow-m4ob.onrender.com/api", // ← your backend URL
-  headers: { "Content-Type": "application/json" },
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
 });
 
 // ── Auto-attach JWT token to EVERY request ────────────────────────────────────
