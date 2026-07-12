@@ -119,14 +119,12 @@ bookingSchema.index({ status: 1, bookingDate: 1 });
 
 // ── Pre-save hook — auto-set timestamps on status change ──────────────────────
 // IMPORTANT: must use function(next) NOT async function — otherwise next breaks
-bookingSchema.pre("save", function (next) {
+bookingSchema.pre("save", async function () {
   if (this.isModified("status")) {
-    const now = new Date();
-    if (this.status === "confirmed")    this.confirmedAt  = now;
-    if (this.status === "completed")    this.completedAt  = now;
-    if (this.status === "cancelled")    this.cancelledAt  = now;
+    if (this.status === "confirmed") this.confirmedAt = new Date();
+    if (this.status === "completed") this.completedAt = new Date();
+    if (this.status === "cancelled") this.cancelledAt = new Date();
   }
-  next();
 });
 
 module.exports = mongoose.model("Booking", bookingSchema);
