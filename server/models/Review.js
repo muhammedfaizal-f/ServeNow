@@ -84,7 +84,7 @@ const reviewSchema = new mongoose.Schema(
 // ── Indexes ───────────────────────────────────────────────────────────────────
 reviewSchema.index({ provider: 1, createdAt: -1 }); // latest reviews per provider
 reviewSchema.index({ user: 1 });                     // reviews by a user
-reviewSchema.index({ booking: 1 }, { unique: true }); // enforce 1 review per booking
+
 
 // ── After saving a review, recalculate provider's average rating ──────────────
 reviewSchema.post("save", async function () {
