@@ -1,68 +1,45 @@
 const express = require("express");
-const router = express.Router();
-const Booking = require("../models/Booking");
+const router  = express.Router();
 
 const {
   createBooking,
   getBookingById,
-  getProviderBookings,
-  getMyBookings,
-  confirmBooking,
-  rejectBooking,
-  startBooking,
-  completeBooking,
-  cancelBooking,
+  getProviderBookings,   // ← NOT getProviderList
+  confirmBooking,        // ← NOT confirm
+  rejectBooking,         // ← NOT reject
+  startBooking,          // ← NOT start
+  completeBooking,       // ← NOT complete
+  cancelBooking,         // ← NOT cancel
   rescheduleBooking,
-  getBookingSummary,
+  getBookingSummary,     // ← NOT getSummary
 } = require("../controllers/bookingController");
 
 const { protect, authorize } = require("../middleware/authMiddleware");
 
-// All booking routes require login
 router.use(protect);
 
-// ── Summary (must be before /:id to avoid param conflict) ────────────────────
 // GET /api/bookings/summary
 router.get("/summary", getBookingSummary);
 
-router.get(
-  "/my",
-  authorize("user", "admin"),
-  getMyBookings
-);
+// GET /api/bookings/provider/list
+router.get("/provider/list", authorize("provider","admin"), getProviderBookings);
 
-router.get(
-  "/provider/list",
-  authorize("provider", "admin"),
-  getProviderBookings
-);
+// POST /api/bookings
+router.post("/", authorize("user","admin"), createBooking);
 
-// ── Core booking CRUD ─────────────────────────────────────────────────────────
-// POST   /api/bookings
-router.post("/", authorize("user", "admin"), createBooking);
-
-// GET    /api/bookings/:id
+// GET /api/bookings/:id
 router.get("/:id", getBookingById);
 
-// ── Status transition routes ──────────────────────────────────────────────────
-//
-//  pending ──► confirmed   (provider)
-//          └─► rejected    (provider)
-//  confirmed ──► in-progress (provider)
-//  in-progress ──► completed (provider)
-//  pending|confirmed ──► cancelled (user ≥2h before, provider, admin)
-//  pending|confirmed ──► rescheduled → back to pending (user)
-
 // Provider actions
-router.patch("/:id/confirm", authorize("provider", "admin"), confirmBooking);
-router.patch("/:id/reject", authorize("provider", "admin"), rejectBooking);
-router.patch("/:id/start", authorize("provider", "admin"), startBooking);
-router.patch("/:id/complete", authorize("provider", "admin"), completeBooking);
+router.patch("/:id/confirm",    authorize("provider","admin"), confirmBooking);
+router.patch("/:id/reject",     authorize("provider","admin"), rejectBooking);
+router.patch("/:id/start",      authorize("provider","admin"), startBooking);
+router.patch("/:id/complete",   authorize("provider","admin"), completeBooking);
 
-// Shared: user, provider, or admin can cancel
-router.patch("/:id/cancel", cancelBooking);
+// Anyone can cancel
+router.patch("/:id/cancel",     cancelBooking);
 
 // User reschedules
-router.patch("/:id/reschedule", authorize("user", "admin"), rescheduleBooking);
+router.patch("/:id/reschedule", authorize("user","admin"), rescheduleBooking);
 
 module.exports = router;
