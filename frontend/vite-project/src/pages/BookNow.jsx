@@ -203,57 +203,56 @@ export default function BookNow() {
     return true;
   };
 
-  // ── STEP 4: Confirm booking — sends to real backend ──────────────────────
-  const handleConfirm = async () => {
-    setSubmitting(true);
-    setError("");
+ const handleConfirm = async () => {
+  setSubmitting(true);
+  setError("");
 
-    // Debug log so you can see exact values sent
-    console.log("Provider:", provider);
-    console.log("Service:", selectedService);
-    console.log("Date:", selectedDate);
-    console.log("Address:", addr);
-    console.log("providerId =", provider?._id);
-    console.log("serviceId =", serviceId);
+  // ── THIS DEBUG BLOCK ──────────────────────────────────────
+  console.log("=== BOOKING DEBUG ===");
+  console.log("provider._id:", provider?._id);
+  console.log("serviceId:", serviceId);
+  console.log("selectedService:", selectedService);
+  console.log("selectedDate.full:", selectedDate?.full);
+  console.log("slot:", slot);
+  console.log("addr:", addr);
+  console.log("payment:", payment);
+  // ────────────────────────────────────────────────────────────────
 
-    try {
-      const payload = {
-        providerId: provider._id,   // real MongoDB ObjectId
-        serviceId: serviceId,          // real MongoDB ObjectId
-        bookingDate: selectedDate.full,  // "2025-08-20"
-        timeSlot: {
-          start: slot,                     // "10:00 AM"
-          end: slot,                     // same slot as end (backend handles duration)
-        },
-        jobAddress: {
-          street: addr.street.trim(),
-          city: addr.city,
-          state: "Tamil Nadu",
-          pincode: addr.pincode.trim(),
-        },
-        paymentMethod: payment,
-        userNotes: notes,
-      };
-      console.log("selectedDate =", selectedDate);
-      console.log("selectedDate.full =", selectedDate?.full);
+  // Check all required fields before sending
+  if (!provider?._id) { setError("Provider not found. Go back and try again."); setSubmitting(false); return; }
+  if (!serviceId)      { setError("No service selected.");                        setSubmitting(false); return; }
+  if (!slot)           { setError("No time slot selected.");                       setSubmitting(false); return; }
+  if (!addr.street)    { setError("Address is required.");                         setSubmitting(false); return; }
+  if (!addr.pincode)   { setError("Pincode is required.");                         setSubmitting(false); return; }
 
-      console.log("Sending booking payload:", payload);
+  try {
+    const payload = {
+      providerId:    provider._id,
+      serviceId:     serviceId,
+      bookingDate:   selectedDate.full,
+      timeSlot:      { start: slot, end: slot },
+      jobAddress: {
+        street:  addr.street.trim(),
+        city:    addr.city,
+        state:   "Tamil Nadu",
+        pincode: addr.pincode.trim(),
+      },
+      paymentMethod: payment,
+      userNotes:     notes || "",
+    };
 
-      const res = await api.post("/bookings", payload);
+    console.log("Final payload being sent:", JSON.stringify(payload, null, 2));
 
-      console.log("Booking success:", res.data);
-      setDone(res.data.booking);
+    const res = await api.post("/bookings", payload);
+    setDone(res.data.booking);
 
-    } catch (err) {
-      console.error("Booking error:", err?.response?.data || err.message);
-      setError(
-        err?.response?.data?.message ||
-        "Booking failed. Please check your details and try again."
-      );
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  } catch (err) {
+    console.error("Full error:", err?.response?.data);
+    setError(err?.response?.data?.message || "Server error. Check console for details.");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   // ─────────────────────────────────────────────────────────────────────────
   // LOADING SCREEN
